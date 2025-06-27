@@ -19,7 +19,7 @@
                   </div>
                   {{/if}}
                   <div id="buffs">
-                     {{#each view.selected.buffs itemView="stonehearthTraitItem"}}
+                     {{#each view.selected.buffs itemView="stonehearthBuffItem"}}
                         <div class="item" {{bind-attr uri=this.uri}}>
                            <img {{bind-attr src=this.icon}} />
                         </div>
