@@ -1,0 +1,11 @@
+{
+   "keys": {
+      "pet:overview": {
+         "display_name": "i18n(stonehearth_ace:ui.game.menu.pet_manager.display_name)",
+         "category": "menus",
+         "ordinal": 25,
+         "combo1": "",
+         "combo2": ""
+      }
+   }
+}
