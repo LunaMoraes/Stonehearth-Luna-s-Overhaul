@@ -16,8 +16,13 @@
 	],
 	"default_locale" : "en",
 	"aliases" : {},
-	"mixintos" : {},
-	"overrides" : {},
+	"mixintos" : {
+		"stonehearth_ace/locales/en.json" : "file(locales/en.json)"
+	},
+	"overrides" : {
+		"stonehearth_ace/ui/game/pets/pets.html" : "file(ui/game/pets/pets.html)",
+		"stonehearth_ace/ui/game/pets/pets.js" : "file(ui/game/pets/pets.js)"
+	},
 	"components" : {},
 	"controllers" : {}
 }

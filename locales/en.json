@@ -1,0 +1,15 @@
+{
+   "ui": {
+      "game": {
+         "pet_manager": {
+            "current_owner": "Current owner: ",
+            "activity": "Activity",
+            "health": "Health",
+            "hunger": "Hunger",
+            "social": "Social",
+            "no_pets": "You have no pets available",
+            "sleepiness": "Sleepiness"
+         }
+      }
+   }
+}
