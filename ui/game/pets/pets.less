@@ -3,16 +3,7 @@
    position: absolute;
    left: 600px;
    z-index: 0;
-   .innerBox {
-      margin-top: 2px;
-      background-position: center;
-      background-size: 1000% 1000%;
-      border-width: 11px 7px 14px 7px;
-      border-image: url(http://radiant/stonehearth/ui/root/css/images/gui/well.png) 11 7 14 7 repeat;
-      border-style: solid;
-      background-image: url(http://radiant/stonehearth/ui/root/css/images/gui/well.png);
-      height: 1185%;
-   }
+
    .window {
       width: 900px;
       height: 657px;
@@ -29,15 +20,30 @@
       height: 70%;
       width: 30%;
       display: inline-grid;
+      
+      h2 {
+         margin-left: 10px;
+      }
+      
       #petDetailsInnerPane {
          height: 100%;
          display: flex;
+         flex-direction: column;
+         text-align: center;
+
+         #selectedPortrait {
+            width: 100%;
+            height: 128px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+         }
+
          #selectedName {
             position: relative;
             top: -10px;
             text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
             color: #ffc000;
-            font-size: 20px;
             font-family: 'groboldregular', 'ofelixgro';
             font-size: 24px;
             text-overflow: ellipsis;
@@ -47,43 +53,234 @@
          }
 
          #selectedDescription {
-            top: 10px;
+            position: relative;
+            top: -10px;
             text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
-            font-size: 20px;
             font-family: 'groboldregular', 'ofelixgro';
             font-size: 16px;
             color: #cdc1a4;
          }
 
-         #selectedClassIcon {
-            top: 22px;
-            left: 20px;
-         }
-
-         #expStat {
-            top: 10px;
-         }
-
          #traits {
             display: block;
+            margin-top: 5px;
+            
+            .item {
+               display: inline-block;
+               border:#000000 1px solid;
+            }
          }
-         .item {
-            display: inline-block;
-            border:#000000 1px solid;
-         }
+         
          .toolbar {
             height: 30%;
             display: block;
-            top: inherit;
-            bottom: 90px;
             position: absolute;
             width: 250px;
-            top: 420px;
+            bottom: 20px;
+            
+            button {
+               width: 200px;
+               margin: 5px 0;
+            }
          }
-         .toolbar button {
-            width: 200px;
+      }
+   }
+
+   .petsList {
+      margin-top: 3%;
+      margin-left: 30px;
+      height: 60%;
+      width: 65%;
+   }
+
+   #tasksPetsList {
+      height: 100%;
+      position: relative;
+      width: 100%;
+      
+      #listTitles {
+         margin-bottom: 5px;
+         padding: 0;
+         height: 30px;
+         
+         .listTitle {
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
          }
          
+         .hidden {
+            display: none;
+         }
+         
+         .statTitle:first-child {
+            padding-left: 23px;
+         }
+         
+         #tasksTitleName {
+            width: 120px;
+            margin-right: 15px;
+            text-align: left;
+         }
+         
+         .statTitle {
+            margin-left: -3px;
+            
+            .statButton {
+               &:hover:not(.disabled) {
+                  -webkit-filter: brightness(1);
+                  filter: brightness(1);
+               }
+               padding: 0px;
+               border-width: 6px 6px 8px 6px;
+            }
+            
+            .petStatImg {
+               height: 27px;
+               width: 27px;
+               margin: -4px -2px -2px 0px;
+            }
+         }
+         
+         #activityTitle {
+            text-align: left;
+            width: 80px;
+            margin-left: 12px;
+            margin-right: 5px;
+         }
+         
+         .listTitle[data-sort-key="health"] {
+            margin-right: 8px;
+         }
+         
+         .listTitle[data-sort-key="hunger"] {
+            margin-right: 8px;
+         }
+         
+         .listTitle[data-sort-key="social"] {
+            margin-right: 8px;
+         }
+         
+         .listTitle[data-sort-key="sleepiness"] {
+            margin-right: 8px;
+         }
+         
+         .listTitle h2 {
+            margin: 0;
+            font-size: 14px;
+            color: #ffc000;
+         }
+      }
+      
+      #listContent {
+         position: relative;
+         height: calc(100% - 40px);
+         width: 100%;
+         
+         &.innerBox {
+            margin-top: 2px;
+            background-position: center;
+            background-size: 1000% 1000%;
+            border-width: 11px 7px 14px 7px;
+            border-image: url(http://radiant/stonehearth/ui/root/css/images/gui/well.png) 11 7 14 7 repeat;
+            border-style: solid;
+            background-image: url(http://radiant/stonehearth/ui/root/css/images/gui/well.png);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 5px;
+            box-sizing: border-box;
+         }
+         
+         table {
+            width: 100%;
+            table-layout: fixed;
+            margin: 0;
+            position: relative;
+            
+            tr:nth-child(even) {
+               background: rgba(0,0,0,0.1);
+            }
+            
+            td {
+               vertical-align: middle;
+               text-align: center;
+               padding-top: 4px;
+            }
+            
+            td:not(.icon) {
+               padding-left: 10px;
+            }
+            
+            .icon {
+               width: 40px;
+               height: 32px;
+               padding-top: 4px;
+               
+               img {
+                  width: 24px;
+                  height: 24px;
+               }
+            }
+            
+            .nameColumn {
+               width: 120px;
+               text-align: left;
+               vertical-align: middle;
+               text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
+               color: #ffc000;
+               font-family: 'groboldregular', 'ofelixgro';
+               font-size: 16px;
+               text-overflow: ellipsis;
+               white-space: nowrap;
+               overflow: hidden;
+               margin-right: 15px;
+            }
+
+            .petActivity {
+               width: 80px;
+               text-align: left;
+               padding-left: 12px;
+               white-space: nowrap;
+               color: #cdc1a4;
+               font-size: 12px;
+               margin-right: 5px;
+            }
+            
+            .petHealth, .petHunger, .petSocial, .petSleepiness {
+               text-align: center;
+               color: #cdc1a4;
+               font-size: 12px;
+               margin-right: 8px;
+            }
+            
+            .centralized {
+               text-align: center;
+            }
+            
+            tr {
+               cursor: url(http://radiant/stonehearth/ui/root/css/images/cursors/Finalhand.cur), default;
+               z-index: 10;
+               
+               &:hover {
+                  background-color: rgba(143, 120, 70, 0.3);
+               }
+            }
+            
+            tr.selected {
+               background-color: #8f7846;
+               
+               &:hover {
+                  background-color: #8f7846;
+               }
+            }
+         }
+         
+         .noPets {
+            text-align: center;
+            color: #cdc1a4;
+            font-size: 16px;
+            padding: 20px;
+         }
       }
    }
 
@@ -98,102 +295,5 @@
    }
    .healthImg {
       .backgroundContain(url(/stonehearth_ace/ui/game/images/health.png));
-   }
-
-
-   .petsList {
-      margin-top: 3%;
-      margin-left: 30px;
-      height: 60%;
-      width: 60%;
-      display: inline-grid;
-   }
-
-   #tasksPetsList {
-      height: 6%;
-      .listTitle {
-         display: inline-grid;
-      }
-      #buttonsBar {
-         margin-right: 35px;
-      }
-      
-      .statTitle {
-         &.healthTitle {
-            margin-left: 42px;
-         }
-
-         
-
-         &.moodTitle {
-            margin-left: 130px;
-         }
-
-         
-      }
-
-      #tasksTitleName {
-         width: 220px;
-         margin-left: 8px;
-      }
-
-      .nameIcon {
-         margin-left: 10px;  
-      }
-      #activityTitle {
-         width: 225px;
-         margin-left: 28px;
-      }
-   }
-
-   table {
-      margin-left: 2px;
-      width: 100%;
-      margin-right: 2px;
-      z-index: 5;
-      .nameColumn {
-         width: 250px;
-         text-align: left;
-         vertical-align: middle;
-         text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
-         color: #ffc000;
-         font-family: 'groboldregular', 'ofelixgro';
-         font-size: 20px;
-         text-overflow: ellipsis;
-         white-space: nowrap;
-         overflow: hidden;
-      }
-
-      .healthColumn {
-         width: 40px;
-
-         .healthIcon {
-            height: 38px;
-         }
-      }
-      .icon {
-         height: 38px;
-         width: 40px;
-      }
-      .activityColumn.singlePlayer {
-         padding-left: 33px;
-      }
-
-      .workOrderColumn {
-         width: 47px;
-      }
-   }
-   tr {
-      cursor: url(http://radiant/stonehearth/ui/root/css/images/cursors/Finalhand.cur), default;
-      z-index: 10;
-   }
-   tr:hover {
-      background-color: rgba(143, 120, 70, 0.3);
-   }
-   .selected {
-      background-color: #8f7846;
-   }
-   .selected:hover {
-      background-color: #8f7846;
    }
 }

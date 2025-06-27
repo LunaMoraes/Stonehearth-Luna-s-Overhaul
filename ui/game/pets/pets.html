@@ -40,20 +40,22 @@
                </div>
             </div>
             <div id="tasksPetsList" class="petsList">
-               <div id="listTitles" class="flex-container">
-                  <button class="brown statButton nameIcon">
-                     <div class="petStatImg"></div>
-                  </button>
+               <div id="listTitles">
+                  <div class="listTitle statTitle" data-sort-key="icon">
+                     <button class="brown statButton nameIcon">
+                        <div class="petStatImg"></div>
+                     </button>
+                  </div>
                   <div class="listTitle" id="tasksTitleName" data-sort-key="name">
                      <h2>{{i18n stonehearth_ace:ui.game.pet_manager.name}}</h2>
                   </div>
-                  <div class="listTitle" data-sort-key="activity">
+                  <div class="listTitle" id="activityTitle" data-sort-key="activity">
                      <h2>{{i18n stonehearth_ace:ui.game.pet_manager.activity}}</h2>
                   </div>
                   <div class="listTitle" data-sort-key="health">
                      <h2>{{i18n stonehearth_ace:ui.game.pet_manager.health}}</h2>
                   </div>
-                  <div class="listTitle calories" data-sort-key="hunger">
+                  <div class="listTitle" data-sort-key="hunger">
                      <h2>{{i18n stonehearth_ace:ui.game.pet_manager.hunger}}</h2>
                   </div>
                   <div class="listTitle" data-sort-key="social">
