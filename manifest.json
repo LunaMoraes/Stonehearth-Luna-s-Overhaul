@@ -5,6 +5,15 @@
 		"version" : 3,
 		"steam_file_id" : "3509498530"
 	},
+	"author" : "Luna",
+	"dependencies" : [
+		"stonehearth",
+		"stonehearth_ace",
+		"rayyas_children",
+		"northern_alliance",
+		"radiant",
+		"debugtools"
+	],
 	"default_locale" : "en",
 	"aliases" : {},
 	"mixintos" : {},
