@@ -21,7 +21,8 @@
 	},
 	"overrides" : {
 		"stonehearth_ace/ui/game/pets/pets.html" : "file(ui/game/pets/pets.html)",
-		"stonehearth_ace/ui/game/pets/pets.js" : "file(ui/game/pets/pets.js)"
+		"stonehearth_ace/ui/game/pets/pets.js" : "file(ui/game/pets/pets.js)",
+		"stonehearth_ace/ui/game/pets/pets.less" : "file(ui/game/pets/pets.less)"
 	},
 	"components" : {},
 	"controllers" : {}
