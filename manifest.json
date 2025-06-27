@@ -1,0 +1,14 @@
+{
+	"info" : {
+		"name" : "Luna's Overhaul",
+		"namespace" : "luna_overhaul",
+		"version" : 3,
+		"steam_file_id" : "3509498530"
+	},
+	"default_locale" : "en",
+	"aliases" : {},
+	"mixintos" : {},
+	"overrides" : {},
+	"components" : {},
+	"controllers" : {}
+}
