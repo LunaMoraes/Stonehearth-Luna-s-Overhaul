@@ -1,5 +1,7 @@
 let pets_list = [];
 let mainView = null;
+let petsLastSortKey = null;
+let petsLastSortDirection = 1;
 
 App.StonehearthAcePetsView = App.View.extend({
    templateName: 'petsView',
@@ -108,6 +110,14 @@ App.StonehearthAcePetsView = App.View.extend({
                      
                      //Set pet list and selected pet + portrait for the first time
                      self.set('pets_list', pets_list);
+                     
+                     // Apply initial sorting
+                     if (petsLastSortKey) {
+                        self.set('sortKey', petsLastSortKey);
+                        self.set('sortDirection', petsLastSortDirection || 1);
+                        self._sortPetsList();
+                     }
+                     
                      self.set('town_pets', town_pets)
                      if (!self.get('selected') && pets_list[0]) {
                         self.set('selected', pets_list[0]);
@@ -150,6 +160,9 @@ App.StonehearthAcePetsView = App.View.extend({
 
             petsLastSortKey = newSortKey;
             petsLastSortDirection = self.get('sortDirection');
+            
+            // Apply sorting to pets list
+            self._sortPetsList();
          }
       });
 
@@ -179,6 +192,62 @@ App.StonehearthAcePetsView = App.View.extend({
          }
       });
    },
+   
+   _sortPetsList: function() {
+      var self = this;
+      var sortKey = self.get('sortKey');
+      var sortDirection = self.get('sortDirection') || 1;
+      
+      if (!pets_list || pets_list.length === 0) {
+         return;
+      }
+      
+      pets_list.sort(function(a, b) {
+         var aValue, bValue;
+         
+         switch(sortKey) {
+            case 'name':
+               aValue = a['stonehearth:unit_info'] && a['stonehearth:unit_info'].custom_name || '';
+               bValue = b['stonehearth:unit_info'] && b['stonehearth:unit_info'].custom_name || '';
+               return sortDirection * aValue.localeCompare(bValue);
+               
+            case 'activity':
+               aValue = a.activity || '';
+               bValue = b.activity || '';
+               return sortDirection * aValue.localeCompare(bValue);
+               
+            case 'health':
+               aValue = parseFloat(a.health) || 0;
+               bValue = parseFloat(b.health) || 0;
+               return sortDirection * (aValue - bValue);
+               
+            case 'hunger':
+               aValue = parseFloat(a.hunger) || 0;
+               bValue = parseFloat(b.hunger) || 0;
+               return sortDirection * (aValue - bValue);
+               
+            case 'social':
+               aValue = parseFloat(a.social) || 0;
+               bValue = parseFloat(b.social) || 0;
+               return sortDirection * (aValue - bValue);
+               
+            case 'sleepiness':
+               aValue = parseFloat(a.sleepiness) || 0;
+               bValue = parseFloat(b.sleepiness) || 0;
+               return sortDirection * (aValue - bValue);
+               
+            default:
+               return 0;
+         }
+      });
+      
+      // Update the pets_list property to trigger UI refresh
+      self.set('pets_list', []);
+      Ember.run.next(function() {
+         self.set('pets_list', pets_list);
+      });
+   },
+   
    actions: {
       doCommand: function(command) {
          var self = this;
