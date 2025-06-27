@@ -25,6 +25,41 @@ App.StonehearthAcePetsView = App.View.extend({
       this._traceTownPets();
       
    },
+
+   dismiss: function() {
+      this.hide();
+   },
+
+   hide: function() {
+      var self = this;
+
+      if (!self.$()) return;
+
+      var index = App.stonehearth.modalStack.indexOf(self)
+      if (index > -1) {
+         App.stonehearth.modalStack.splice(index, 1);
+      }
+      this._super();
+   },
+
+   show: function() {
+      this._super();
+      App.stonehearth.modalStack.push(this);
+   },
+
+   willDestroyElement: function() {
+      var self = this;
+      
+      if (self._petTraces) {
+         self._petTraces.destroy();
+         self._petTraces = null;
+      }
+
+      self.$().off('click');
+      self.$().find('.tooltipstered').tooltipster('destroy');
+
+      this._super();
+   },
    
    _traceTownPets: function() {
       var playerId = App.stonehearthClient.getPlayerId()
@@ -171,7 +206,6 @@ App.StonehearthAcePetsView = App.View.extend({
       }
       //Change pet selection on click
       self.$('#petTable').on('click', 'tr', function () {
-         console.log(pets_list)
          if(pets_list.length > 0){ //check if any pets are available to select
             if(!$(this).hasClass('selected')) {
                $('#petTable tr').removeClass('selected');
