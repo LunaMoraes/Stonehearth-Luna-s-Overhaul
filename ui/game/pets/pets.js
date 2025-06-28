@@ -21,6 +21,7 @@ App.StonehearthAcePetsView = App.View.extend({
       var self = this;
       this._super();
       mainView = this;
+      
       //Trace town pets on init
       this._traceTownPets();
       
@@ -93,22 +94,59 @@ App.StonehearthAcePetsView = App.View.extend({
                      return;
                   }
                   var town_pets = response.town_pets || {};
-                  if (town_pets == {}) return //if no pets, return
-                  else if (self.get('pets_list')) { //check if pets list has changed
-                     var townNew = JSON.stringify(town_pets)
-                     var townOld = JSON.stringify(self.get('town_pets'))
-                     if (townOld==townNew) {
-                        return
+                  
+                  // Check if there are no pets
+                  if (Object.keys(town_pets).length === 0) {
+                     self.set('pets_list', []);
+                     pets_list = [];
+                     self.set('town_pets', {});
+                     self.set('selected', null);
+                     return;
+                  }
+                  
+                  // Check if pets list has changed (only skip update if identical)
+                  // Commenting out this check to force updates after pet release
+                  /*
+                  if (self.get('pets_list') && self.get('pets_list').length > 0) {
+                     var townNew = JSON.stringify(town_pets);
+                     var townOld = JSON.stringify(self.get('town_pets'));
+                     if (townOld === townNew) {
+                        return; // No changes, skip update
                      }
                   }
-                  else {
-                     self.set('pets_list', [])
-                     var list_keys = Object.keys(town_pets);
-                     var pet_object = {}
-                     for (var i = 0; i < list_keys.length; i++){
+                  */
+                  
+                  // Process pets (always rebuild the list)
+                  self.set('pets_list', []);
+                  pets_list = []; // Clear the global array
+                  var list_keys = Object.keys(town_pets);
+                  var pet_object = {};
+                  
+                  for (var i = 0; i < list_keys.length; i++){
                         //Get pet object and add to list
                         pet_object = town_pets[list_keys[i]];
-                        pets_list[i] = pet_object;
+                        
+                        // Check if this pet still has a valid pet component and owner
+                        if (!pet_object || !pet_object['stonehearth:pet']) {
+                           continue;
+                        }
+                        
+                        // Check if the pet component indicates it's still a pet
+                        var pet_comp = pet_object['stonehearth:pet'];
+                        if (!pet_comp.is_pet || pet_comp.is_pet === false) {
+                           continue;
+                        }
+                        
+                        // Check if pet has an owner
+                        if (!pet_comp.owner_display_name && !pet_comp.owner_custom_name) {
+                           continue;
+                        }
+                        
+                        pets_list.push(pet_object);
+                     }
+                     
+                     // Now process the filtered pets list
+                     for (var i = 0; i < pets_list.length; i++){
                         //Get health, hunger, social and sleepiness percentages
                         var health_percentage = Math.round(((pets_list[i]['stonehearth:expendable_resources'].resource_percentages.health)*100)*10)/10;
                         var hunger_percentage = Math.round(100-(Math.round(((pets_list[i]['stonehearth:expendable_resources'].resource_percentages.calories)*100)*10)/10)/10);
@@ -153,7 +191,7 @@ App.StonehearthAcePetsView = App.View.extend({
                         self._sortPetsList();
                      }
                      
-                     self.set('town_pets', town_pets)
+                     self.set('town_pets', town_pets);
                      if (!self.get('selected') && pets_list[0]) {
                         self.set('selected', pets_list[0]);
                         self.set('selected_index', pets_list[0]);
@@ -162,10 +200,8 @@ App.StonehearthAcePetsView = App.View.extend({
                         self.$('#selectedPortrait').css('background-image', 'url(' + portrait_url + ')');  
                      }       
                      
-                     
                      //debugger
                      return;
-                  }
                   
                })
                .fail(function(e) {
@@ -221,8 +257,6 @@ App.StonehearthAcePetsView = App.View.extend({
             radiant.call('stonehearth:camera_look_at_entity', uri);
             radiant.call('stonehearth:select_entity', uri);
             radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:start_menu:focus' });
-            //recheck the pets list
-            mainView._traceTownPets();
          }
       });
    },
@@ -288,21 +322,50 @@ App.StonehearthAcePetsView = App.View.extend({
          var pet_data = self.get('selected');
          var pet_id = pet_data.__self;
          var player_id = pet_data.player_id;
-         App.stonehearthClient.doCommand(pet_id, player_id, command);
-         //Check if pet was removed
+         
+         // Special handling for release pet command
          if (command.name == 'release_pet') {
-            //remove pet from list and recheck the pets list
-            $('#petTable').find('tr').eq(self.get('selected_index')).remove();
-            pets_list.splice(self.get('selected_index'), 1);
-            self.set('pets_list', pets_list);
-            self.set('selected', pets_list[0]);
-            $('#petTable').find('tr').eq(0).addClass('selected');
-            var uri = pets_list[0].__self;
-            var portrait_url = '/r/get_portrait/?type=headshot&animation=idle_breathe.json&entity=' + uri + '&cache_buster=' + Math.random();
-            self.$('#selectedPortrait').css('background-image', 'url(' + portrait_url + ')');  
-            mainView._traceTownPets();
-            
+            // Show confirmation dialog like stonehearth_ace does
+            App.gameView.addView(App.StonehearthConfirmView, {
+               title : i18n.t('stonehearth:ui.game.pet_character_sheet.release_pet_confirm_dialog.title'),
+               message : i18n.t('stonehearth:ui.game.pet_character_sheet.release_pet_confirm_dialog.message'),
+               buttons : [
+                  {
+                     id: 'accept',
+                     label: i18n.t('stonehearth:ui.game.pet_character_sheet.release_pet_confirm_dialog.accept'),
+                     click: function() {
+                        // Call the release function directly when confirmed
+                        radiant.call('stonehearth:release_pet', pet_id);
+                        
+                        // Set up a delayed refresh since the promise might not work reliably
+                        setTimeout(function() {
+                           // Force a complete refresh after the pet is released
+                           if (self._petTraces) {
+                              self._petTraces.destroy();
+                              self._petTraces = null;
+                           }
+                           
+                           // Clear existing data to force a fresh reload
+                           self.set('pets_list', null);
+                           self.set('town_pets', null);
+                           self.set('selected', null);
+                           pets_list = [];
+                           
+                           // Refresh the pets list
+                           self._traceTownPets();
+                        }, 500); // Wait 500ms for server to process the release
+                     }
+                  },
+                  {
+                     id: 'cancel',
+                     label: i18n.t('stonehearth:ui.game.pet_character_sheet.release_pet_confirm_dialog.cancel')
+                  }
+               ]
+            });
+         } else {
+            // For all other commands, use the normal doCommand
+            App.stonehearthClient.doCommand(pet_id, player_id, command);
          }
-      },
+      }
    },
 });

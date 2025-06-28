@@ -22,6 +22,11 @@
 		"stonehearth_ace/locales/en.json" : "file(locales/en.json)",
 		"stonehearth:hotkeys" : "luna_overhaul:hotkeys"
 	},
+	"ui" : {
+		"js": [
+			"file(ui/console/pet_console_commands.js)"
+		]
+	},
 	"overrides" : {
 		"stonehearth_ace/ui/game/pets/pets.html" : "file(ui/game/pets/pets.html)",
 		"stonehearth_ace/ui/game/pets/pets.js" : "file(ui/game/pets/pets.js)",
@@ -30,5 +35,11 @@
 		"stonehearth/ui/root/js/stonehearth/stonehearth_client.js" : "file(ui/root/js/stonehearth/stonehearth_client.js)"
 	},
 	"components" : {},
-	"controllers" : {}
+	"controllers" : {},
+	"functions" : {
+		"add_pet_command": {
+			"controller": "file(call_handlers/pet_commands.lua)",
+			"endpoint": "server"
+		}
+	}
 }
