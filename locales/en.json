@@ -1,4 +1,16 @@
 {
+   "data": {
+      "buffs": {
+         "pet_utility_level1": {
+            "display_name": "Little Helper",
+            "description": "This pet has learned to assist its owner, providing them with increased movement speed and building efficiency when working nearby."
+         },
+         "pet_utility_owner_level1": {
+            "display_name": "Pet Assistance",
+            "description": "You are being assisted by your pet, gaining increased movement speed and building efficiency."
+         }
+      }
+   },
    "ui": {
       "game": {
          "pet_manager": {

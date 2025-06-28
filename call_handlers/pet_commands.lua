@@ -1,3 +1,5 @@
+local log = radiant.log.create_logger('pet_commands')
+
 local Commands = class()
 
 function Commands:add_pet_command(session, response, pet_uri)
@@ -34,6 +36,15 @@ function Commands:add_pet_command(session, response, pet_uri)
       pet_component:set_owner(citizens:get(citizen_id))
    end
 
+   -- Add the pet utility buff for testing
+   local buffs_component = pet:get_component('stonehearth:buffs')
+   if buffs_component then
+      log:info('Adding pet utility buff to entity: %s', tostring(pet))
+      buffs_component:add_buff('luna_overhaul:buffs:pet_utility_level1')
+      log:info('Pet utility buff added successfully')
+   else
+      log:error('Pet has no buffs component!')
+   end
 
    return true
 end
