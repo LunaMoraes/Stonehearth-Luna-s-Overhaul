@@ -17,9 +17,9 @@
 	"default_locale" : "en",
 	"aliases" : {
 		"hotkeys": "file(data/hotkeys.json)",
-		"buffs:pet_utility_level1": "file(data/buffs/pet_utility_level1.json)",
-		"buffs:pet_utility_owner_level1": "file(data/buffs/pet_utility_owner_level1.json)",
-		"buffs:pet_utility_level1_buff": "file(data/buffs/pet_utility_level1_buff.lua)"
+		"buffs:pet_utility_level1": "file(data/buffs/pet_utility/pet_utility_level1.json)",
+		"buffs:pet_utility_owner_level1": "file(data/buffs/pet_utility/pet_utility_owner_level1.json)",
+		"buffs:pet_utility_level1_buff": "file(data/buffs/pet_utility/pet_utility_level1_buff.lua)"
 	},
 	"mixintos" : {
 		"stonehearth_ace/locales/en.json" : "file(locales/en.json)",
