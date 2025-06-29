@@ -13,6 +13,9 @@
    },
    "ui": {
       "game": {
+         "citizens": {
+            "no_citizens": "No citizens on town"
+         },
          "pet_manager": {
             "current_owner": "Current owner: ",
             "activity": "Activity",
