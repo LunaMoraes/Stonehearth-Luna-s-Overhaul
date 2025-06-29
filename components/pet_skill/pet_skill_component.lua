@@ -77,6 +77,8 @@ function PetSkillComponent:_on_buff_added(buff_uri)
    log:info('Pet buff added: %s', tostring(buff_uri or 'nil'))
    if self:_is_skill_buff(buff_uri) then
       log:info('Skill buff detected, updating owner buffs')
+      -- Remove other skill buffs when a new one is added (leveling up or changing branches)
+      self:_remove_other_skill_buffs(buff_uri)
       -- Pass the specific buff URI to handle timing issues
       self:_update_owner_buffs(buff_uri)
    end
@@ -95,6 +97,8 @@ function PetSkillComponent:_is_skill_buff(buff_uri)
    -- Define which buffs provide owner benefits
    local skill_buffs = {
       ['luna_overhaul:buffs:pet_utility_level1'] = true,
+      ['luna_overhaul:buffs:pet_utility_level2'] = true,
+      ['luna_overhaul:buffs:pet_utility_level3'] = true,
       -- Add more skill buffs here as needed
    }
    
@@ -105,6 +109,8 @@ function PetSkillComponent:_get_owner_buff_for_skill(buff_uri)
    -- Map pet skill buffs to their corresponding owner buffs
    local owner_buffs = {
       ['luna_overhaul:buffs:pet_utility_level1'] = 'luna_overhaul:buffs:pet_utility_owner_level1',
+      ['luna_overhaul:buffs:pet_utility_level2'] = 'luna_overhaul:buffs:pet_utility_owner_level2',
+      ['luna_overhaul:buffs:pet_utility_level3'] = 'luna_overhaul:buffs:pet_utility_owner_level3',
       -- Add more mappings here as needed
    }
    
@@ -291,6 +297,32 @@ function PetSkillComponent:_remove_specific_owner_buff(buff_uri)
             log:info('Keeping owner buff: %s (other pets still provide skill: %s)', owner_buff_uri, buff_uri)
          end
       end
+   end
+end
+
+function PetSkillComponent:_remove_other_skill_buffs(new_buff_uri)
+   -- When a pet gets a new skill buff, remove all other skill buffs
+   -- This handles leveling up and branch changes
+   local buffs_component = self._entity:get_component('stonehearth:buffs')
+   if not buffs_component then
+      log:debug('Pet has no buffs component for skill buff cleanup')
+      return
+   end
+   
+   local buffs_to_remove = {}
+   
+   -- Collect all skill buffs that are not the new one
+   for buff_uri, buff_data in pairs(buffs_component:get_buffs()) do
+      if self:_is_skill_buff(buff_uri) and buff_uri ~= new_buff_uri then
+         table.insert(buffs_to_remove, buff_uri)
+      end
+   end
+   
+   -- Remove the old skill buffs (this will automatically trigger _on_buff_removed for each)
+   for _, buff_uri in ipairs(buffs_to_remove) do
+      log:info('Removing old skill buff: %s (replaced by: %s)', buff_uri, new_buff_uri)
+      buffs_component:remove_buff(buff_uri)
+      -- Owner buff cleanup will happen automatically via _on_buff_removed event
    end
 end
 

@@ -5,9 +5,25 @@
             "display_name": "Little Helper",
             "description": "This pet has learned to assist its owner, providing them with increased movement speed and building efficiency when working nearby."
          },
+         "pet_utility_level2": {
+            "display_name": "Dedicated Helper",
+            "description": "This pet has become more skilled at assisting its owner, providing increased movement speed, building efficiency, and enhanced dedication to work."
+         },
+         "pet_utility_level3": {
+            "display_name": "Master Helper",
+            "description": "This pet has mastered the art of assistance, providing its owner with increased movement speed, building efficiency, enhanced work dedication, and improved cognitive abilities."
+         },
          "pet_utility_owner_level1": {
-            "display_name": "Pet Assistance",
+            "display_name": "Helper Assistance",
             "description": "You are being assisted by your pet, gaining increased movement speed and building efficiency."
+         },
+         "pet_utility_owner_level2": {
+            "display_name": "Helper Assistance II",
+            "description": "Your pet's improved assistance grants you increased movement speed, building efficiency, and enhanced work dedication."
+         },
+         "pet_utility_owner_level3": {
+            "display_name": "Helper Assistance III",
+            "description": "Your pet's masterful assistance provides you with increased movement speed, building efficiency, enhanced work dedication, and improved mental focus."
          }
       }
    },
