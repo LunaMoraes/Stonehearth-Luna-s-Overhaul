@@ -177,18 +177,64 @@ function PetSkillComponent:_remove_owner_buffs_from_entity(owner_entity)
       return
    end
    
-   -- Remove all owner buffs that this pet might have applied
-   local owner_buff_uris = {
-      'luna_overhaul:buffs:pet_utility_owner_level1',
-      -- Add more owner buff URIs here as needed
-   }
+   -- Only remove owner buffs that correspond to this specific pet's skill buffs
+   local buffs_component = self._entity:get_component('stonehearth:buffs')
+   if not buffs_component then
+      log:debug('Pet has no buffs component, nothing to remove from owner')
+      return
+   end
    
-   for _, buff_uri in ipairs(owner_buff_uris) do
-      if owner_buffs_component:has_buff(buff_uri) then
-         log:info('Removing owner buff: %s from entity: %s', buff_uri, tostring(owner_entity))
-         owner_buffs_component:remove_buff(buff_uri)
+   -- Check what skill buffs this pet has and remove only the corresponding owner buffs
+   -- BUT first check if other pets owned by the same person still provide the same benefit
+   for buff_uri, buff_data in pairs(buffs_component:get_buffs()) do
+      if self:_is_skill_buff(buff_uri) then
+         local owner_buff_uri = self:_get_owner_buff_for_skill(buff_uri)
+         if owner_buff_uri and owner_buffs_component:has_buff(owner_buff_uri) then
+            -- Check if any other pets owned by this person still have the same skill buff
+            if not self:_owner_has_other_pets_with_skill(owner_entity, buff_uri) then
+               log:info('Removing owner buff: %s from entity: %s (from pet skill: %s, no other pets provide this)', 
+                        owner_buff_uri, tostring(owner_entity), buff_uri)
+               owner_buffs_component:remove_buff(owner_buff_uri)
+            else
+               log:info('Keeping owner buff: %s on entity: %s (other pets still provide skill: %s)', 
+                        owner_buff_uri, tostring(owner_entity), buff_uri)
+            end
+         end
       end
    end
+end
+
+function PetSkillComponent:_owner_has_other_pets_with_skill(owner_entity, skill_buff_uri)
+   if not owner_entity or not owner_entity:is_valid() then
+      return false
+   end
+   
+   -- Get all pets owned by this entity
+   local pet_component = owner_entity:get_component('stonehearth:pet_owner')
+   if not pet_component then
+      log:debug('Owner has no pet_owner component')
+      return false
+   end
+   
+   local owned_pets = pet_component:get_pets()
+   if not owned_pets then
+      log:debug('Owner has no pets')
+      return false
+   end
+   
+   -- Check each pet (except this one) to see if they have the same skill buff
+   for pet_id, pet_entity in pairs(owned_pets) do
+      if pet_entity and pet_entity:is_valid() and pet_entity ~= self._entity then
+         local pet_buffs_component = pet_entity:get_component('stonehearth:buffs')
+         if pet_buffs_component and pet_buffs_component:has_buff(skill_buff_uri) then
+            -- Found another pet with the same skill buff
+            log:debug('Found other pet %s with skill buff %s', tostring(pet_entity), skill_buff_uri)
+            return true
+         end
+      end
+   end
+   
+   return false
 end
 
 function PetSkillComponent:_get_current_owner()
