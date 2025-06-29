@@ -906,12 +906,19 @@ App.StonehearthCitizenTasksContainerView = App.StonehearthCitizenRowContainerVie
    },
 
    removeRow: function(citizenId) {
-      // Select the first row if the row we are removing is selected
+      // Handle selection when removing a citizen
       var selected = this.containerParentView.$('.selected');
       if (selected && selected[0]) {
          var selectedCitizenId = selected[0].getAttribute('data-citizen-id');
-         if (citizenId == selectedCitizenId && this.get('length') > 1) {
-            this.objectAt(0)._selectRow();
+         if (citizenId == selectedCitizenId) {
+            // The selected citizen is being removed
+            if (this.get('length') > 1) {
+               // Select the first remaining citizen
+               this.objectAt(0)._selectRow();
+            } else {
+               // No citizens left, clear the selection
+               this.containerParentView.setSelectedCitizen(null, null, false);
+            }
          }
       }
 
