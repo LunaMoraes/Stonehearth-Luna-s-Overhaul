@@ -77,7 +77,8 @@ function PetSkillComponent:_on_buff_added(buff_uri)
    log:info('Pet buff added: %s', tostring(buff_uri or 'nil'))
    if self:_is_skill_buff(buff_uri) then
       log:info('Skill buff detected, updating owner buffs')
-      self:_update_owner_buffs()
+      -- Pass the specific buff URI to handle timing issues
+      self:_update_owner_buffs(buff_uri)
    end
 end
 
@@ -85,7 +86,8 @@ function PetSkillComponent:_on_buff_removed(buff_uri)
    log:info('Pet buff removed: %s', tostring(buff_uri or 'nil'))
    if self:_is_skill_buff(buff_uri) then
       log:info('Skill buff removed, updating owner buffs')
-      self:_update_owner_buffs()
+      -- For removal, we need to remove the specific owner buff immediately
+      self:_remove_specific_owner_buff(buff_uri)
    end
 end
 
@@ -109,10 +111,7 @@ function PetSkillComponent:_get_owner_buff_for_skill(buff_uri)
    return owner_buffs[buff_uri]
 end
 
-function PetSkillComponent:_update_owner_buffs()
-   -- First, remove any existing owner buffs
-   self:_remove_all_owner_buffs()
-   
+function PetSkillComponent:_update_owner_buffs(specific_buff_uri)
    -- Get the current owner
    local owner = self:_get_current_owner()
    if not owner or not owner:is_valid() then
@@ -136,23 +135,32 @@ function PetSkillComponent:_update_owner_buffs()
    end
    
    local applied_any_buff = false
-   -- Apply owner buffs for each skill buff the pet has
+   
+   -- If we have a specific buff URI (from buff_added event), try to apply it directly first
+   if specific_buff_uri and self:_is_skill_buff(specific_buff_uri) then
+      local owner_buff_uri = self:_get_owner_buff_for_skill(specific_buff_uri)
+      if owner_buff_uri then
+         log:info('Applying specific owner buff: %s (from event: %s)', owner_buff_uri, specific_buff_uri)
+         owner_buffs_component:add_buff(owner_buff_uri)
+         applied_any_buff = true
+      end
+   end
+   
+   -- Also check all existing buffs (in case the event-based approach missed something)
    for buff_uri, buff_data in pairs(buffs_component:get_buffs()) do
       log:debug('Checking pet buff: %s', buff_uri)
       if self:_is_skill_buff(buff_uri) then
          local owner_buff_uri = self:_get_owner_buff_for_skill(buff_uri)
-         if owner_buff_uri then
+         if owner_buff_uri and not owner_buffs_component:has_buff(owner_buff_uri) then
             log:info('Applying owner buff: %s', owner_buff_uri)
             owner_buffs_component:add_buff(owner_buff_uri)
             applied_any_buff = true
-         else
-            log:warning('No owner buff mapping found for: %s', buff_uri)
          end
       end
    end
    
    if not applied_any_buff then
-      log:info('No skill buffs found on pet, no owner buffs applied')
+      log:info('No new skill buffs found on pet, no owner buffs applied')
    end
 end
 
@@ -255,6 +263,35 @@ function PetSkillComponent:_get_current_owner()
    end
    
    return nil
+end
+
+function PetSkillComponent:_remove_specific_owner_buff(buff_uri)
+   local owner = self:_get_current_owner()
+   if not owner or not owner:is_valid() then
+      log:debug('No valid owner found for specific buff removal')
+      return
+   end
+   
+   local owner_buffs_component = owner:get_component('stonehearth:buffs')
+   if not owner_buffs_component then
+      log:debug('Owner has no buffs component for specific removal')
+      return
+   end
+   
+   if self:_is_skill_buff(buff_uri) then
+      local owner_buff_uri = self:_get_owner_buff_for_skill(buff_uri)
+      if owner_buff_uri then
+         -- Check if any other pets owned by this person still have the same skill buff
+         if not self:_owner_has_other_pets_with_skill(owner, buff_uri) then
+            if owner_buffs_component:has_buff(owner_buff_uri) then
+               log:info('Removing specific owner buff: %s (from pet skill: %s)', owner_buff_uri, buff_uri)
+               owner_buffs_component:remove_buff(owner_buff_uri)
+            end
+         else
+            log:info('Keeping owner buff: %s (other pets still provide skill: %s)', owner_buff_uri, buff_uri)
+         end
+      end
+   end
 end
 
 return PetSkillComponent

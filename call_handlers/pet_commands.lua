@@ -39,9 +39,9 @@ function Commands:add_pet_command(session, response, pet_uri)
    -- Add the pet utility buff for testing
    local buffs_component = pet:get_component('stonehearth:buffs')
    if buffs_component then
-      log:info('Adding pet utility buff to entity: %s', tostring(pet))
-      buffs_component:add_buff('luna_overhaul:buffs:pet_utility_level1')
-      log:info('Pet utility buff added successfully')
+      --log:info('Adding pet utility buff to entity: %s', tostring(pet))
+      --buffs_component:add_buff('luna_overhaul:buffs:pet_utility_level1')
+      --log:info('Pet utility buff added successfully')
    else
       log:error('Pet has no buffs component!')
    end
