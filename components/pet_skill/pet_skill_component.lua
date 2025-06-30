@@ -41,9 +41,6 @@ function PetSkillComponent:activate()
    -- Listen for when this pet eats food to gain experience
    self._eat_food_listener = radiant.events.listen(self._entity, 'stonehearth:eat_food', self, self._on_pet_ate_food)
    
-   -- Listen for training branch selection command
-   self._choose_branch_listener = radiant.events.listen(self._entity, 'luna_overhaul_choose_training_branch', self, self._on_choose_training_branch)
-   
    log:info('Pet skill component: Event listeners set up')
    
    -- Check for existing skill buffs and current owner on activation
@@ -72,11 +69,6 @@ function PetSkillComponent:destroy()
    if self._eat_food_listener then
       self._eat_food_listener:destroy()
       self._eat_food_listener = nil
-   end
-   
-   if self._choose_branch_listener then
-      self._choose_branch_listener:destroy()
-      self._choose_branch_listener = nil
    end
 end
 
@@ -650,51 +642,6 @@ function PetSkillComponent:reset_pet()
    
    self.__saved_variables:mark_changed()
    return true
-end
-
--- Handle training branch selection command
-function PetSkillComponent:_on_choose_training_branch()
-   log:info('Choose training branch command received for pet %s', tostring(self._entity))
-   
-   -- Get the owner to show the dialog to
-   local owner = self:_get_current_owner()
-   if not owner or not owner:is_valid() then
-      log:warning('Cannot show training branch dialog: pet has no valid owner')
-      return
-   end
-   
-   local player_id = radiant.entities.get_player_id(owner)
-   if not player_id then
-      log:warning('Cannot show training branch dialog: owner has no valid player ID')
-      return
-   end
-   
-   -- Define available branches
-   local branch_options = {
-      {
-         text = i18n.t('luna_overhaul:ui.game.pet_manager.branches.utility', 'Utility Branch'),
-         tooltip = 'Train your pet to assist with utility tasks and provide owner benefits',
-         callback = function()
-            log:info('Player selected utility branch for pet %s', tostring(self._entity))
-            self:train_branch('utility')
-         end
-      }
-      -- Add more branches here in the future:
-      -- {
-      --    text = 'Combat Branch',
-      --    tooltip = 'Train your pet for combat and protection',
-      --    callback = function()
-      --       self:train_branch('combat')
-      --    end
-      -- }
-   }
-   
-   -- Show the branch selection dialog (similar to change_owner)
-   App.stonehearthClient.showTitleDialog(player_id, 
-      'Choose Training Branch', 
-      'Select a training specialization for your pet:', 
-      branch_options
-   )
 end
 
 -- Handle when the pet eats food and award experience

@@ -76,7 +76,7 @@ function Commands:add_pet_xp_command(session, response, entity)
    end
 end
 
-function Commands:pet_change_branch_command(session, response, entity)
+function Commands:pet_change_branch_command(session, response, entity, branch_name)
    -- Check if entity is provided and valid
    if not entity or not entity:is_valid() then
       response:reject('Failed: No valid entity provided')
@@ -90,7 +90,7 @@ function Commands:pet_change_branch_command(session, response, entity)
       return
    end
    
-   local branch_name = 'utility'
+   -- The branch_name is now passed from the client instead of being hardcoded
    local success = pet_skill_component:train_branch(branch_name)
    
    if success then

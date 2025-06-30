@@ -3,7 +3,10 @@
       "commands": {
          "choose_training_branch": {
             "display_name": "Choose Training Branch",
-            "description": "Select a training specialization for your pet"
+            "description": "Select a training specialization for your pet",
+            "utility_branch_name": "Utility Skilltree",
+            "combat_branch_name": "Combat Skilltree",
+            "therapist_branch_name": "Therapist Skilltree"
          }
       },
       "buffs": {

@@ -53,15 +53,4 @@ end
 radiant.events.listen(luna_overhaul, 'radiant:init', luna_overhaul, luna_overhaul._on_init)
 radiant.events.listen(radiant, 'radiant:required_loaded', luna_overhaul, luna_overhaul._on_required_loaded)
 
--- Register command event listeners
-radiant.events.listen(radiant, 'luna_overhaul_choose_training_branch', function(args)
-   local entity = args.entity
-   if not entity then
-      return
-   end
-   
-   -- Just trigger the event on the entity - the pet_skill_component will handle it
-   radiant.events.trigger(entity, 'luna_overhaul_choose_training_branch')
-end)
-
 return luna_overhaul

@@ -415,6 +415,8 @@ App.StonehearthAcePetsView = App.View.extend({
          }
       }
    },
+
+   
    
    _forceRefreshPetData: function() {
       var self = this;
@@ -439,4 +441,45 @@ App.StonehearthAcePetsView = App.View.extend({
          self._updatePetSkillAttributes();
       }, 100);
    },
+});
+
+$(document).ready(function() {
+   // Listen for the event fired by our command
+   $(top).on('luna_overhaul:choose_training_branch', function (_, e) {
+      var petUri = e.entity;
+      var availableBranches = ["utility", "combat", "therapist"];
+      var dialogButtons = [];
+
+      availableBranches.forEach(function(branchName) {
+         var i18n_key = 'luna_overhaul:data.commands.choose_training_branch.' + branchName + '_branch_name';
+         var branchButton = {
+            id: branchName,
+            label: i18n.t(i18n_key),
+            click: function() {
+               // Call the server to change the branch
+               radiant.call('luna_overhaul:pet_change_branch_command', petUri, branchName)
+                  .done(function(response) {
+                     // This part only runs AFTER the server confirms the change was successful.
+                     // Refresh pet data in the pet manager view
+                     var petManagerView = App.stonehearthClient._petManager;
+                     if (petManagerView && !petManagerView.isDestroyed) {
+                        petManagerView._forceRefreshPetData();
+                     }
+                  });
+            }
+         };
+         dialogButtons.push(branchButton);
+      });
+
+      dialogButtons.push({
+         id: 'cancel',
+         label: i18n.t('stonehearth:ui.game.common.cancel')
+      });
+
+      App.gameView.addView(App.StonehearthConfirmView, {
+         title : i18n.t('luna_overhaul:data.commands.choose_training_branch.display_name'),
+         message : i18n.t('luna_overhaul:data.commands.choose_training_branch.description'),
+         buttons : dialogButtons
+      });
+   });
 });

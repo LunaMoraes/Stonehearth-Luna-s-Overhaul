@@ -6,7 +6,7 @@
    "icon": "file(choose_training_branch.png)",
    "action": "fire_event",
    "ordinal": 10,
-   "event_name": "luna_overhaul_choose_training_branch",
+   "event_name": "luna_overhaul:choose_training_branch",
    "hotkey_action": "ui:choose_training_branch",
    "event_data": {}
 }
