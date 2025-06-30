@@ -17,7 +17,7 @@
 
    #petDetails {
       margin-top: 3%;
-      height: 70%;
+      height: 75%;
       width: 30%;
       display: inline-grid;
       
@@ -81,15 +81,25 @@
          }
          
          .toolbar {
-            height: 30%;
-            display: block;
-            position: absolute;
-            width: 250px;
-            bottom: 20px;
+            // Use flexbox for better button management
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: flex-start;
+            
+            // Remove absolute positioning to allow natural flow
+            position: relative; 
+            width: 100%; // Take full width of the container
+            margin-top: 15px; // Add some space from the content above
+            bottom: unset; // Unset the bottom property
+
+            a {
+               margin: 3px; // Add margin to the anchor tag for spacing
+            }
             
             button {
                width: 200px;
-               margin: 5px 0;
+               // The margin on the anchor tag will handle spacing
             }
          }
       }
@@ -289,45 +299,45 @@
             padding: 20px;
          }
       }
-   }         #petSkillStat {
+   }      #petSkillStat {
+         position: relative;
+         margin-top: 10px;
+
+         #selectedBranch {
             position: relative;
-            margin-top: 10px;
-
-            #selectedBranch {
-               position: relative;
-               margin-bottom: 5px;
-               font-size: 16px;
-               color: #ffc000;
-               font-family: 'groboldregular', 'ofelixgro';
-               text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
-            }
-
-            .label {
-               position: relative;
-               left: 11px;
-               top: -7px;
-               font-size: 15px;
-               color: #cdc1a4;
-               font-family: 'groboldregular', 'ofelixgro';
-               text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
-            }
-
-            .bar {
-               position: relative;
-               width: 137px;
-               height: 15px;
-               display: inline-block;
-               border: 3px solid #000;
-               background: #2b2b3d;
-               text-align: right;
-               margin: 0 auto;
-            }
-
-            .expBar {
-               background: #7ba42d;
-               height: 100%;
-            }
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #ffc000;
+            font-family: 'groboldregular', 'ofelixgro';
+            text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
          }
+
+         .label {
+            position: relative;
+            left: 11px;
+            top: -7px;
+            font-size: 15px;
+            color: #cdc1a4;
+            font-family: 'groboldregular', 'ofelixgro';
+            text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
+         }
+
+         .bar {
+            position: relative;
+            width: 137px;
+            height: 15px;
+            display: inline-block;
+            border: 3px solid #000;
+            background: #2b2b3d;
+            text-align: right;
+            margin: 0 auto;
+         }
+
+         .expBar {
+            background: #7ba42d;
+            height: 100%;
+         }
+      }
 
    .hasPetsIcon {
       content: url(images/pets.png);
@@ -340,5 +350,22 @@
    }
    .healthImg {
       .backgroundContain(url(/stonehearth_ace/ui/game/images/health.png));
+   }
+}
+
+// Styles for the confirmation dialog (used for choosing training branch)
+// By adding our custom class, this selector is more specific and will override defaults.
+#confirmView {
+   #buttons {
+      // Use flexbox to allow buttons to wrap to the next line
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center; // Center the buttons
+      padding: 0 10px;
+
+      // Add margin to each button for spacing
+      #button, button {
+         margin: 5px;
+      }
    }
 }

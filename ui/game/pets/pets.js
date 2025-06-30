@@ -447,7 +447,30 @@ $(document).ready(function() {
    // Listen for the event fired by our command
    $(top).on('luna_overhaul:choose_training_branch', function (_, e) {
       var petUri = e.entity;
-      var availableBranches = ["utility", "combat", "therapist"];
+      var allBranches = ["utility", "combat", "therapist"];
+      
+      // Since we can't directly access the component data here without another async call,
+      // we'll rely on the currently selected pet in the main view.
+      var petManagerView = mainView;
+      if (!petManagerView || petManagerView.isDestroyed) {
+         return;
+      }
+
+      var selectedPet = petManagerView.get('selected');
+      if (!selectedPet || selectedPet.__self !== petUri) {
+         // If the event is for a pet that isn't selected, we can't reliably get its branch.
+         // This is a fallback, but ideally the UI only allows this for the selected pet.
+         console.log("Choose branch command fired for a non-selected pet. This might not work as expected.");
+         return;
+      }
+      
+      var petSkillData = selectedPet['luna_overhaul:pet_skill'];
+      var currentBranch = petSkillData ? petSkillData.current_branch : null;
+      
+      var availableBranches = allBranches.filter(function(branch) {
+         return branch !== currentBranch;
+      });
+      
       var dialogButtons = [];
 
       availableBranches.forEach(function(branchName) {
@@ -461,7 +484,6 @@ $(document).ready(function() {
                   .done(function(response) {
                      // This part only runs AFTER the server confirms the change was successful.
                      // Refresh pet data in the pet manager view
-                     var petManagerView = App.stonehearthClient._petManager;
                      if (petManagerView && !petManagerView.isDestroyed) {
                         petManagerView._forceRefreshPetData();
                      }
@@ -479,7 +501,8 @@ $(document).ready(function() {
       App.gameView.addView(App.StonehearthConfirmView, {
          title : i18n.t('luna_overhaul:data.commands.choose_training_branch.display_name'),
          message : i18n.t('luna_overhaul:data.commands.choose_training_branch.description'),
-         buttons : dialogButtons
+         buttons : dialogButtons,
+         class: 'choose-branch-dialog' // Add a custom class for styling
       });
    });
 });
