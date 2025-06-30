@@ -30,7 +30,7 @@
 	"mixintos" : {
 		"stonehearth_ace/locales/en.json" : "file(locales/en.json)",
 		"stonehearth:hotkeys" : "luna_overhaul:hotkeys",
-		"stonehearth_ace/mixins/pet/pet.json" : "file(mixins/pet/pet_skill_mixin.json)"
+		"stonehearth:mixins:pet" : "file(mixins/pet/pet_skill_mixin.json)"
 	},
 	"ui" : {
 		"js": [
@@ -52,6 +52,14 @@
 	"controllers" : {},
 	"functions" : {
 		"add_pet_command": {
+			"controller": "file(call_handlers/pet_commands.lua)",
+			"endpoint": "server"
+		},
+		"add_pet_xp_command": {
+			"controller": "file(call_handlers/pet_commands.lua)",
+			"endpoint": "server"
+		},
+		"pet_change_branch_command": {
 			"controller": "file(call_handlers/pet_commands.lua)",
 			"endpoint": "server"
 		}

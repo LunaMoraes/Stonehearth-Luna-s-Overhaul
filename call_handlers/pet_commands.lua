@@ -49,4 +49,58 @@ function Commands:add_pet_command(session, response, pet_uri)
    return true
 end
 
+function Commands:add_pet_xp_command(session, response, entity)
+   -- Check if entity is provided and valid
+   if not entity or not entity:is_valid() then
+      response:reject('Failed: No valid entity provided')
+      return
+   end
+   
+   -- Check if the entity has a pet skill component
+   local pet_skill_component = entity:get_component('luna_overhaul:pet_skill')
+   if not pet_skill_component then
+      response:reject('Failed: Selected entity is not a pet with skill component')
+      return
+   end
+   
+   local exp_amount = 50  -- 2 uses will level up from level 1 (needs 100 XP)
+   local success = pet_skill_component:give_experience(exp_amount)
+   
+   if success then
+      local status = pet_skill_component:get_pet_status()
+      log:info('Added %d XP to pet %s. Status: Level %d, XP %d/%d, Branch: %s', 
+               exp_amount, tostring(entity), status.level, status.experience, status.exp_to_next, status.branch or 'none')
+      response:resolve(true)
+   else
+      response:reject('Failed: Could not add experience to pet')
+   end
+end
+
+function Commands:pet_change_branch_command(session, response, entity)
+   -- Check if entity is provided and valid
+   if not entity or not entity:is_valid() then
+      response:reject('Failed: No valid entity provided')
+      return
+   end
+   
+   -- Check if the entity has a pet skill component
+   local pet_skill_component = entity:get_component('luna_overhaul:pet_skill')
+   if not pet_skill_component then
+      response:reject('Failed: Selected entity is not a pet with skill component')
+      return
+   end
+   
+   local branch_name = 'utility'
+   local success = pet_skill_component:train_branch(branch_name)
+   
+   if success then
+      local status = pet_skill_component:get_pet_status()
+      log:info('Changed pet %s branch to %s. Status: Level %d, XP %d/%d', 
+               tostring(entity), branch_name, status.level, status.experience, status.exp_to_next)
+      response:resolve(true)
+   else
+      response:reject('Failed: Could not change pet branch')
+   end
+end
+
 return Commands
