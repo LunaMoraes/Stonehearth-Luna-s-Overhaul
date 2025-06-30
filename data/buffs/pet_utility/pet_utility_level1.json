@@ -5,6 +5,5 @@
    "description": "i18n(luna_overhaul:data.buffs.pet_utility_level1.description)",
    "icon": "file(pet_utility_level1.png)",
    "persistent": true,
-   "invisible_to_player": false,
-   "script": "luna_overhaul:buffs:pet_utility_level1_buff"
+   "invisible_to_player": false
 }
