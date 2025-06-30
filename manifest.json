@@ -25,7 +25,9 @@
 		"buffs:pet_utility_owner_level3": "file(data/buffs/pet_utility/pet_utility_owner_level3.json)",
 		"buffs:pet_utility_level1_buff": "file(data/buffs/pet_utility/pet_utility_level1_buff.lua)",
 		"buffs:pet_utility_level2_buff": "file(data/buffs/pet_utility/pet_utility_level2_buff.lua)",
-		"buffs:pet_utility_level3_buff": "file(data/buffs/pet_utility/pet_utility_level3_buff.lua)"
+		"buffs:pet_utility_level3_buff": "file(data/buffs/pet_utility/pet_utility_level3_buff.lua)",
+		"commands:choose_training_branch": "file(data/commands/choose_training_branch/choose_training_branch.json)"
+
 	},
 	"mixintos" : {
 		"/stonehearth_ace/locales/en.json" : "file(locales/en.json)",
@@ -49,9 +51,6 @@
 	"server_init_script": "file(luna_overhaul_server)",
 	"components" : {
 		"pet_skill": "file(components/pet_skill/pet_skill_component.lua)"
-	},
-	"commands" : {
-		"choose_training_branch": "file(data/commands/choose_training_branch/choose_training_branch.json)"
 	},
 	"controllers" : {},
 	"functions" : {
