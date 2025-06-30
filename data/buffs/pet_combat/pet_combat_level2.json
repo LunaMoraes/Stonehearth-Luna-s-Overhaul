@@ -1,0 +1,9 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(luna_overhaul:data.buffs.pet_combat_level2.display_name)",
+   "description": "i18n(luna_overhaul:data.buffs.pet_combat_level2.description)",
+   "icon": "file(pet_combat_level2.png)",
+   "persistent": true,
+   "invisible_to_player": false
+}

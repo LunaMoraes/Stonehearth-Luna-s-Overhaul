@@ -33,6 +33,54 @@
          "pet_utility_owner_level3": {
             "display_name": "Helper Assistance III",
             "description": "Your pet's masterful assistance provides you with increased movement speed, building efficiency, enhanced work dedication, and improved mental focus."
+         },
+         "pet_combat_level1": {
+            "display_name": "Little Soldier",
+            "description": "This pet has learned to assist its owner, providing them with minor combat buffs"
+         },
+         "pet_combat_level2": {
+            "display_name": "Dedicated Soldier",
+            "description": "This pet has become more skilled at assisting its owner in combat, providing increased combat buffs and improved work dedication."
+         },
+         "pet_combat_level3": {
+            "display_name": "Master Soldier",
+            "description": "This pet has mastered the art of combat assistance, providing its owner with increased combat buffs, enhanced work dedication, and improved cognitive abilities."
+         },
+         "pet_combat_owner_level1": {
+            "display_name": "Helper Combatant",
+            "description": "You are being assisted by your pet, gaining increased combat efficiency."
+         },
+         "pet_combat_owner_level2": {
+            "display_name": "Helper Combatant II",
+            "description": "Your pet's improved assistance grants you increased combat efficiency and enhanced work dedication."
+         },
+         "pet_combat_owner_level3": {
+            "display_name": "Helper Combatant III",
+            "description": "Your pet's masterful assistance provides you with increased combat efficiency, enhanced work dedication, and improved mental focus."
+         },
+         "pet_therapist_level1": {
+            "display_name": "Little Service Pet",
+            "description": "This pet has learnt how to be a service pet, taking care of its owner well being."
+         },
+         "pet_therapist_level2": {
+            "display_name": "Dedicated Service Pet",
+            "description": "This pet has become more skilled at assisting its owner, making sure their mental needs are met."
+         },
+         "pet_therapist_level3": {
+            "display_name": "Master Service Pet",
+            "description": "This pet has mastered the art of service, providing its owner with increased mental well-being and social interaction."
+         },
+         "pet_therapist_owner_level1": {
+            "display_name": "Helper Service Pet I",
+            "description": "This owner has a in training service pet, which helps them with their mental well-being."
+         },
+         "pet_therapist_owner_level2": {
+            "display_name": "Helper Service Pet II",
+            "description": "This owner has a trained service pet, which helps them with their mental well-being and social interaction."
+         },
+         "pet_therapist_owner_level3": {
+            "display_name": "Helper Service Pet III",
+            "description": "This owner has a master service pet, which helps them with their mental well-being, social interaction, and provides a calming presence."
          }
       }
    },

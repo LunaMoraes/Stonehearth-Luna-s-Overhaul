@@ -3,37 +3,50 @@ local log = radiant.log.create_logger('pet_skill')
 local PetSkillComponent = class()
 
 --[[
-   SKILL_DATA is the single source of truth for all pet skill buffs.
-   Each entry maps a pet's skill buff URI to its properties:
-   - branch: The name of the skill branch (e.g., 'utility', 'combat').
-   - level: The numerical level of the skill.
-   - owner_buff: The corresponding buff URI to be applied to the pet's owner.
+   NEW SKILL BRANCH CONFIGURATION:
+   To add a new skill branch, simply add its name to the 'branches' list below.
+   The SKILL_DATA table will be generated automatically based on this list
+   and the naming convention of your buff files.
 --]]
-local SKILL_DATA = {
-   ['luna_overhaul:buffs:pet_utility_level1'] = {
-      branch = 'utility',
-      level = 1,
-      owner_buff = 'luna_overhaul:buffs:pet_utility_owner_level1'
-   },
-   ['luna_overhaul:buffs:pet_utility_level2'] = {
-      branch = 'utility',
-      level = 2,
-      owner_buff = 'luna_overhaul:buffs:pet_utility_owner_level2'
-   },
-   ['luna_overhaul:buffs:pet_utility_level3'] = {
-      branch = 'utility',
-      level = 3,
-      owner_buff = 'luna_overhaul:buffs:pet_utility_owner_level3'
-   },
-   -- Add combat branch buffs here when you create them
-   -- ['luna_overhaul:buffs:pet_combat_level1'] = {
-   --    branch = 'combat',
-   --    level = 1,
-   --    owner_buff = 'luna_overhaul:buffs:pet_combat_owner_level1'
-   -- },
+local BRANCH_CONFIG = {
+   branches = { 'utility', 'combat', 'therapist' },
+   max_level = 3
 }
 
+-- This table is now built dynamically.
+local SKILL_DATA = {}
+
+-- This function builds the SKILL_DATA table programmatically.
+-- It runs once when the script is first loaded.
+local function _build_skill_data()
+   -- Ensure this only runs once.
+   if next(SKILL_DATA) then return end
+
+   log:info('Building SKILL_DATA table dynamically...')
+   for _, branch_name in ipairs(BRANCH_CONFIG.branches) do
+      for level = 1, BRANCH_CONFIG.max_level do
+         -- This assumes your buff files follow the pattern:
+         -- pet buff: "luna_overhaul:buffs:pet_<branch_name>_level<level>"
+         -- owner buff: "luna_overhaul:buffs:pet_<branch_name>_owner_level<level>"
+         local pet_buff_uri = string.format('luna_overhaul:buffs:pet_%s_level%d', branch_name, level)
+         local owner_buff_uri = string.format('luna_overhaul:buffs:pet_%s_owner_level%d', branch_name, level)
+
+         SKILL_DATA[pet_buff_uri] = {
+            branch = branch_name,
+            level = level,
+            owner_buff = owner_buff_uri
+         }
+      end
+   end
+   log:info('SKILL_DATA table built successfully.')
+end
+
+_build_skill_data()
+
+
 -- ================== COMPONENT LIFECYCLE ==================
+-- This component manages pet skills, including buffs, experience, and leveling.
+-- =========================================================
 
 function PetSkillComponent:activate()
    log:info('Pet skill component activated for entity: %s', tostring(self._entity))

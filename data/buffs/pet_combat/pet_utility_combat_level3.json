@@ -1,0 +1,18 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(luna_overhaul:data.buffs.pet_combat_owner_level3.display_name)",
+   "description": "i18n(luna_overhaul:data.buffs.pet_combat_owner_level3.description)",
+   "invisible": true,
+   "modifiers": {
+      "additive_armor_modifier": {
+         "multiply": 1.5
+      },
+      "max_health": {
+         "multiply": 1.1
+      },
+      "body": {
+         "add": 1
+      }
+   }
+}

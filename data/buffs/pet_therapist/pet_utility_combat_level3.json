@@ -1,0 +1,18 @@
+{
+   "type": "buff",
+   "axis": "buff",
+   "display_name": "i18n(luna_overhaul:data.buffs.pet_therapist_owner_level3.display_name)",
+   "description": "i18n(luna_overhaul:data.buffs.pet_therapist_owner_level3.description)",
+   "invisible": true,
+   "modifiers": {
+      "courage": {
+         "add": 50
+      },
+      "willpower": {
+         "multiply": 1.2
+      },
+      "spirit": {
+         "add": 1
+      }
+   }
+}
