@@ -39,7 +39,14 @@
             "hunger": "Hunger",
             "social": "Social",
             "no_pets": "You have no pets available",
-            "sleepiness": "Sleepiness"
+            "sleepiness": "Sleepiness",
+            "branches": {
+               "utility": "Utility Skilltree"
+            },
+            "no_branch": "Untrained",
+            "exp_bar": {
+               "description": "Experience progress towards next level"
+            }
          }
       }
    }

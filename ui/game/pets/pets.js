@@ -14,7 +14,8 @@ App.StonehearthAcePetsView = App.View.extend({
       'stonehearth:unit_info': {},
       'stonehearth:attributes' : {},
       'stonehearth:expendable_resources' : {},
-      'stonehearth:pet' : {}
+      'stonehearth:pet' : {},
+      'luna_overhaul:pet_skill': {}
    },
 
    init: function() {
@@ -84,6 +85,7 @@ App.StonehearthAcePetsView = App.View.extend({
                         }
                      },
                      'stonehearth:expendable_resources': {},
+                     'luna_overhaul:pet_skill': {},
                   },
                },
             };
@@ -316,6 +318,47 @@ App.StonehearthAcePetsView = App.View.extend({
       });
    },
    
+   _updatePetSkillAttributes: function() {
+      var self = this;
+      var existingSelected = self.get('selected');
+
+      if (existingSelected && existingSelected['luna_overhaul:pet_skill']) {
+         var petSkillData = existingSelected['luna_overhaul:pet_skill'];
+         var currentLevel = petSkillData.current_level || 1;
+         var currentExp = petSkillData.current_exp || 0;
+         var expToNext = petSkillData.exp_to_next_level || 50;
+         var currentBranch = petSkillData.current_branch;
+         
+         // Calculate percentage (prevent division by zero)
+         var expPercent = expToNext > 0 ? Math.floor((currentExp / expToNext) * 100) : 0;
+         var expLabel = 'Lvl ' + currentLevel;
+         
+         // Set branch label
+         var branchLabel = '';
+         if (currentBranch) {
+            switch (currentBranch) {
+               case 'utility':
+                  branchLabel = i18n.t('luna_overhaul:ui.game.pet_manager.branches.utility');
+                  break;
+               // Add more branches as needed
+               default:
+                  branchLabel = currentBranch;
+            }
+         } else {
+            branchLabel = i18n.t('luna_overhaul:ui.game.pet_manager.no_branch');
+         }
+
+         self.set('pet_exp_bar_style', 'width: ' + expPercent + '%');
+         self.set('pet_exp_bar_label', expLabel);
+         self.set('pet_branch_label', branchLabel);
+      } else {
+         // No pet skill component or no selected pet
+         self.set('pet_exp_bar_style', 'width: 0%');
+         self.set('pet_exp_bar_label', 'Lvl 1');
+         self.set('pet_branch_label', i18n.t('luna_overhaul:ui.game.pet_manager.no_branch'));
+      }
+   }.observes('selected.luna_overhaul:pet_skill'),
+
    actions: {
       doCommand: function(command) {
          var self = this;
