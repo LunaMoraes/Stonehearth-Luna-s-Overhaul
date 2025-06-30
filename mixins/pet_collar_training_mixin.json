@@ -1,0 +1,11 @@
+{
+   "type": "entity",
+   "components": {
+      "stonehearth:equipment_piece": {
+         "injected_commands": [
+            "stonehearth:commands:release_pet",
+            "luna_overhaul:commands:choose_training_branch"
+         ]
+      }
+   }
+}

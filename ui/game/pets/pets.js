@@ -181,6 +181,7 @@ App.StonehearthAcePetsView = App.View.extend({
                            command_list[j] = pets_list[i]['stonehearth:commands'].commands[command_keys[j]];
                            
                         }
+                        console.log('Available commands for pet ' + (pets_list[i]['stonehearth:unit_info'].custom_name || pets_list[i]['stonehearth:unit_info'].display_name) + ':', command_list);
                         //console.log(command_list[0].display_name)
                         pets_list[i].available_commands = command_list;
                                              

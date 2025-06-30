@@ -1,5 +1,11 @@
 {
    "data": {
+      "commands": {
+         "choose_training_branch": {
+            "display_name": "Choose Training Branch",
+            "description": "Select a training specialization for your pet"
+         }
+      },
       "buffs": {
          "pet_utility_level1": {
             "display_name": "Little Helper",

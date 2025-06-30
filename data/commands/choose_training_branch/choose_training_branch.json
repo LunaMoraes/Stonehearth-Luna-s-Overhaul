@@ -1,0 +1,12 @@
+{
+   "type": "command",
+   "name": "choose_training_branch",
+   "display_name": "i18n(luna_overhaul:data.commands.choose_training_branch.display_name)",
+   "description": "i18n(luna_overhaul:data.commands.choose_training_branch.description)",
+   "icon": "file(choose_training_branch.png)",
+   "action": "fire_event",
+   "ordinal": 10,
+   "event_name": "luna_overhaul_choose_training_branch",
+   "hotkey_action": "ui:choose_training_branch",
+   "event_data": {}
+}

@@ -38,6 +38,12 @@ function PetSkillComponent:activate()
       self:_on_buff_removed(args.buff_uri)
    end)
    
+   -- Listen for when this pet eats food to gain experience
+   self._eat_food_listener = radiant.events.listen(self._entity, 'stonehearth:eat_food', self, self._on_pet_ate_food)
+   
+   -- Listen for training branch selection command
+   self._choose_branch_listener = radiant.events.listen(self._entity, 'luna_overhaul_choose_training_branch', self, self._on_choose_training_branch)
+   
    log:info('Pet skill component: Event listeners set up')
    
    -- Check for existing skill buffs and current owner on activation
@@ -61,6 +67,16 @@ function PetSkillComponent:destroy()
    if self._buff_removed_listener then
       self._buff_removed_listener:destroy()
       self._buff_removed_listener = nil
+   end
+   
+   if self._eat_food_listener then
+      self._eat_food_listener:destroy()
+      self._eat_food_listener = nil
+   end
+   
+   if self._choose_branch_listener then
+      self._choose_branch_listener:destroy()
+      self._choose_branch_listener = nil
    end
 end
 
@@ -634,6 +650,83 @@ function PetSkillComponent:reset_pet()
    
    self.__saved_variables:mark_changed()
    return true
+end
+
+-- Handle training branch selection command
+function PetSkillComponent:_on_choose_training_branch()
+   log:info('Choose training branch command received for pet %s', tostring(self._entity))
+   
+   -- Get the owner to show the dialog to
+   local owner = self:_get_current_owner()
+   if not owner or not owner:is_valid() then
+      log:warning('Cannot show training branch dialog: pet has no valid owner')
+      return
+   end
+   
+   local player_id = radiant.entities.get_player_id(owner)
+   if not player_id then
+      log:warning('Cannot show training branch dialog: owner has no valid player ID')
+      return
+   end
+   
+   -- Define available branches
+   local branch_options = {
+      {
+         text = i18n.t('luna_overhaul:ui.game.pet_manager.branches.utility', 'Utility Branch'),
+         tooltip = 'Train your pet to assist with utility tasks and provide owner benefits',
+         callback = function()
+            log:info('Player selected utility branch for pet %s', tostring(self._entity))
+            self:train_branch('utility')
+         end
+      }
+      -- Add more branches here in the future:
+      -- {
+      --    text = 'Combat Branch',
+      --    tooltip = 'Train your pet for combat and protection',
+      --    callback = function()
+      --       self:train_branch('combat')
+      --    end
+      -- }
+   }
+   
+   -- Show the branch selection dialog (similar to change_owner)
+   App.stonehearthClient.showTitleDialog(player_id, 
+      'Choose Training Branch', 
+      'Select a training specialization for your pet:', 
+      branch_options
+   )
+end
+
+-- Handle when the pet eats food and award experience
+function PetSkillComponent:_on_pet_ate_food(eat_event_data)
+   -- Constants
+   local FOOD_EAT_XP = 15  -- Same as mason level 0 recipe (stone door)
+   
+   log:info('Entity %s ate food: %s', tostring(self._entity), eat_event_data.food_name or 'unknown food')
+   
+   -- Safety check: Ensure this entity is actually a pet
+   local pet_component = self._entity:get_component('stonehearth:pet')
+   if not pet_component then
+      log:warning('Entity %s has pet_skill_component but no pet component - this should not happen!', tostring(self._entity))
+      return
+   end
+   
+   -- Ensure the pet has an owner (is actually adopted/tamed)
+   local owner = pet_component:get_owner()
+   if not owner or not owner:is_valid() then
+      log:info('Pet %s has no valid owner, no XP awarded for eating', tostring(self._entity))
+      return
+   end
+   
+   -- Only award XP if pet has a branch (has been trained)
+   if not self._sv.current_branch then
+      log:info('Pet %s has no branch yet, no XP awarded for eating', tostring(self._entity))
+      return
+   end
+   
+   -- Award experience
+   self:add_exp(FOOD_EAT_XP)
+   log:info('Pet %s awarded %d XP for eating %s', tostring(self._entity), FOOD_EAT_XP, eat_event_data.food_name or 'food')
 end
 
 -- ================== END PUBLIC FUNCTIONS ==================
