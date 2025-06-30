@@ -47,6 +47,9 @@ App.StonehearthAcePetsView = App.View.extend({
    show: function() {
       this._super();
       App.stonehearth.modalStack.push(this);
+      
+      // Force refresh of all pet data when menu is opened
+      this._forceRefreshPetData();
    },
 
    willDestroyElement: function() {
@@ -410,5 +413,29 @@ App.StonehearthAcePetsView = App.View.extend({
             App.stonehearthClient.doCommand(pet_id, player_id, command);
          }
       }
+   },
+   
+   _forceRefreshPetData: function() {
+      var self = this;
+      
+      // Destroy existing traces to force fresh data
+      if (self._petTraces) {
+         self._petTraces.destroy();
+         self._petTraces = null;
+      }
+      
+      // Clear existing data
+      self.set('pets_list', []);
+      self.set('town_pets', {});
+      self.set('selected', null);
+      pets_list = [];
+      
+      // Re-initialize the pet traces
+      self._traceTownPets();
+      
+      // Trigger pet skill attribute update after a brief delay to ensure data is loaded
+      setTimeout(function() {
+         self._updatePetSkillAttributes();
+      }, 100);
    },
 });
