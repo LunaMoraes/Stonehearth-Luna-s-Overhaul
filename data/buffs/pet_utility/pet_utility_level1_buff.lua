@@ -8,16 +8,14 @@ log:info('Pet utility level 1 buff script loaded')
 function PetUtilityLevel1Buff:on_buff_added(entity, buff)
    log:info('Pet utility buff script: on_buff_added called for entity %s', tostring(entity))
    
-   -- Manually trigger the pet skill component to update owner buffs as a backup
+   -- The pet skill component should already exist via monkey patch
    local pet_skill_component = entity:get_component('luna_overhaul:pet_skill')
    if pet_skill_component then
       log:info('Pet utility buff script: Found pet skill component, triggering buff update')
       pet_skill_component:_on_buff_added(buff:get_uri())
    else
-      log:warning('Pet utility buff script: Pet skill component not found!')
+      log:error('Pet utility buff script: Pet skill component not found! This should not happen - check monkey patch.')
    end
-   
-   log:info('Pet utility buff script: Pet skill component should already be present')
 end
 
 function PetUtilityLevel1Buff:on_buff_removed(entity, buff)

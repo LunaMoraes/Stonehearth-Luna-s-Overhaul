@@ -29,8 +29,7 @@
 	},
 	"mixintos" : {
 		"stonehearth_ace/locales/en.json" : "file(locales/en.json)",
-		"stonehearth:hotkeys" : "luna_overhaul:hotkeys",
-		"stonehearth:mixins:pet" : "file(mixins/pet/pet_skill_mixin.json)"
+		"stonehearth:hotkeys" : "luna_overhaul:hotkeys"
 	},
 	"ui" : {
 		"js": [
@@ -46,6 +45,7 @@
 		"stonehearth_ace/ui/game/start_menu/images/pets.png" : "file(ui/game/start_menu/images/pets.png)",
 		"stonehearth/ui/root/js/stonehearth/stonehearth_client.js" : "file(ui/root/js/stonehearth/stonehearth_client.js)"
 	},
+	"server_init_script": "file(luna_overhaul_server)",
 	"components" : {
 		"pet_skill": "file(components/pet_skill/pet_skill_component.lua)"
 	},
