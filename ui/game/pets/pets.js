@@ -109,18 +109,6 @@ App.StonehearthAcePetsView = App.View.extend({
                      return;
                   }
                   
-                  // Check if pets list has changed (only skip update if identical)
-                  // Commenting out this check to force updates after pet release
-                  /*
-                  if (self.get('pets_list') && self.get('pets_list').length > 0) {
-                     var townNew = JSON.stringify(town_pets);
-                     var townOld = JSON.stringify(self.get('town_pets'));
-                     if (townOld === townNew) {
-                        return; // No changes, skip update
-                     }
-                  }
-                  */
-                  
                   // Process pets (always rebuild the list)
                   self.set('pets_list', []);
                   pets_list = []; // Clear the global array
@@ -181,8 +169,6 @@ App.StonehearthAcePetsView = App.View.extend({
                            command_list[j] = pets_list[i]['stonehearth:commands'].commands[command_keys[j]];
                            
                         }
-                        console.log('Available commands for pet ' + (pets_list[i]['stonehearth:unit_info'].custom_name || pets_list[i]['stonehearth:unit_info'].display_name) + ':', command_list);
-                        //console.log(command_list[0].display_name)
                         pets_list[i].available_commands = command_list;
                                              
                      }
@@ -206,7 +192,6 @@ App.StonehearthAcePetsView = App.View.extend({
                         self.$('#selectedPortrait').css('background-image', 'url(' + portrait_url + ')');  
                      }       
                      
-                     //debugger
                      return;
                   
                })
@@ -340,14 +325,10 @@ App.StonehearthAcePetsView = App.View.extend({
          // Set branch label
          var branchLabel = '';
          if (currentBranch) {
-            switch (currentBranch) {
-               case 'utility':
-                  branchLabel = i18n.t('luna_overhaul:ui.game.pet_manager.branches.utility');
-                  break;
-               // Add more branches as needed
-               default:
-                  branchLabel = currentBranch;
-            }
+            // Dynamically construct the i18n key to get the localized branch name.
+            // This uses the same localization keys as the command buttons for consistency.
+            var branch_i18n_key = 'luna_overhaul:data.commands.choose_training_branch.' + currentBranch + '_branch_name';
+            branchLabel = i18n.t(branch_i18n_key);
          } else {
             branchLabel = i18n.t('luna_overhaul:ui.game.pet_manager.no_branch');
          }
