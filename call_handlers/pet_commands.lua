@@ -103,4 +103,35 @@ function Commands:pet_change_branch_command(session, response, entity, branch_na
    end
 end
 
+function Commands:check_entity_buffs_command(session, response, entity)
+   -- Check if entity is provided and valid
+   if not entity or not entity:is_valid() then
+      response:reject('Failed: No valid entity provided')
+      return
+   end
+
+   local buffs_component = entity:get_component('stonehearth:buffs')
+   if not buffs_component then
+      log:warning('Entity %s has no buffs component.', tostring(entity))
+      response:resolve(true) -- Resolve so the console doesn't show an error
+      return
+   end
+
+   local current_buffs = buffs_component:get_buffs()
+   local buff_count = 0
+   log:info('---------------------------------')
+   log:info('Buffs for entity %s:', tostring(entity))
+   for buff_uri, _ in pairs(current_buffs) do
+      log:info('- %s', buff_uri)
+      buff_count = buff_count + 1
+   end
+   
+   if buff_count == 0 then
+      log:info('Entity has no active buffs.')
+   end
+   log:info('---------------------------------')
+   
+   response:resolve(true)
+end
+
 return Commands

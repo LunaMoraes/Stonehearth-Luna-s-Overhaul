@@ -77,14 +77,28 @@ function PetSkillComponent:activate()
 end
 
 function PetSkillComponent:destroy()
-   -- When this component is destroyed, its buffs are removed from the pet,
-   -- which fires the 'stonehearth:buff_removed' event.
-   -- That event triggers _sync_owner_buffs, correctly updating the owner.
-   -- We just need to clean up our listeners here.
+   -- Get the owner BEFORE destroying listeners and other data.
+   local owner = self:_get_current_owner()
+   log:info('Pet skill component is being destroyed for entity: %s', tostring(self._entity))
+
    if self._adoption_listener then self._adoption_listener:destroy() end
    if self._buff_added_listener then self._buff_added_listener:destroy() end
    if self._buff_removed_listener then self._buff_removed_listener:destroy() end
    if self._eat_food_listener then self._eat_food_listener:destroy() end
+   
+   if owner and owner:is_valid() then
+      -- To prevent a race condition on pet death, we manually ensure the pet is
+      -- removed from the owner's list of pets BEFORE we sync buffs. This makes the
+      -- cleanup immediate and reliable without needing a timer.
+      local pet_owner_component = owner:get_component('stonehearth:pet_owner')
+      if pet_owner_component then
+         log:info('Manually removing pet %s from owner %s list before syncing buffs.', tostring(self._entity), tostring(owner))
+         pet_owner_component:remove_pet(self._entity)
+      end
+      
+      -- Now that the owner's pet list is guaranteed to be correct, sync the buffs.
+      self:_sync_owner_buffs(owner)
+   end
 end
 
 -- ================== EVENT HANDLERS ==================
@@ -100,8 +114,14 @@ function PetSkillComponent:_on_owner_changed(new_owner)
 
    -- Sync buffs for the old owner (if they existed)
    if old_owner and old_owner:is_valid() then
+      -- Manually remove the pet from the old owner's list to ensure state is correct before syncing.
+      local pet_owner_component = old_owner:get_component('stonehearth:pet_owner')
+      if pet_owner_component then
+         pet_owner_component:remove_pet(self._entity)
+      end
       self:_sync_owner_buffs(old_owner)
    end
+   
    -- Sync buffs for the new owner
    if new_owner and new_owner:is_valid() then
       self:_sync_owner_buffs(new_owner)
@@ -109,20 +129,24 @@ function PetSkillComponent:_on_owner_changed(new_owner)
 end
 
 function PetSkillComponent:_on_buff_added(buff_uri)
-   log:info('Pet buff added event fired with URI: %s', tostring(buff_uri or 'nil'))
-   -- Any time a buff is added to a pet, we run a sync.
-   -- This is the most reliable way to handle buff changes, especially since
-   -- the buff_uri from the event can sometimes be nil. The _sync_owner_buffs function
-   -- is smart enough to determine the correct state by checking all of the pet's current buffs.
-   self:_sync_owner_buffs()
+   -- Only sync if the buff added is a skill buff we manage.
+   if buff_uri and SKILL_DATA[buff_uri] then
+      log:info('Pet skill buff added: %s. Syncing owner.', tostring(buff_uri))
+      self:_sync_owner_buffs()
+   end
 end
 
 function PetSkillComponent:_on_buff_removed(buff_uri)
-   log:info('Pet buff removed event fired with URI: %s', tostring(buff_uri or 'nil'))
-   -- Any time a skill buff is removed, run a full sync.
-   -- This is more reliable than trying to figure out which buff was removed,
-   -- especially if the event payload is nil.
-   self:_sync_owner_buffs()
+   -- If a specific skill buff URI is provided, sync.
+   if buff_uri and SKILL_DATA[buff_uri] then
+      log:info('Specific pet skill buff removed: %s. Syncing owner.', tostring(buff_uri))
+      self:_sync_owner_buffs()
+   -- If the URI is nil, it *might* be a skill buff removal that the engine failed to report properly.
+   -- To be safe, we still run a sync in this ambiguous case.
+   elseif not buff_uri then
+      log:info('Ambiguous pet buff removed (URI is nil). Running a precautionary sync.')
+      self:_sync_owner_buffs()
+   end
 end
 
 function PetSkillComponent:_on_pet_ate_food(eat_event_data)

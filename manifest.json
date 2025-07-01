@@ -71,6 +71,10 @@
 			"controller": "file(call_handlers/pet_commands.lua)",
 			"endpoint": "server"
 		},
+		"check_entity_buffs_command": {
+			"controller": "file(call_handlers/pet_commands.lua)",
+			"endpoint": "server"
+		},
 		"pet_change_branch_command": {
 			"controller": "file(call_handlers/pet_commands.lua)",
 			"endpoint": "server"

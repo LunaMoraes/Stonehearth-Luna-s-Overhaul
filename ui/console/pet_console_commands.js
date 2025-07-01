@@ -23,6 +23,16 @@ $(document).ready(function(){
       description: "Give 50 XP to the selected pet (2 uses = level up from level 1). Usage: add_pet_xp"
    });
 
+   radiant.console.register('check_buffs', {
+      call: function(cmdobj, fn, args) {
+         if (selected) {
+            return radiant.call('luna_overhaul:check_entity_buffs_command', selected);
+         }
+         return false;
+      },
+      description: "Check all active buffs on the selected entity and prints them to the log. Usage: check_buffs"
+   });
+
    radiant.console.register('pet_change_branch', {
       call: function(cmdobj, fn, args) {
          if (selected) {
