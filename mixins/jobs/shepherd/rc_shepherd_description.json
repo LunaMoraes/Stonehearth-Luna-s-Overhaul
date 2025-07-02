@@ -1,0 +1,5 @@
+{
+   "display_order": 7,
+   "parent_job": "stonehearth:jobs:worker",
+   "parent_level_requirement": 0
+}

@@ -8,15 +8,27 @@ local function monkey_patching()
       return
    end
    
-   local monkey_see = require('monkey_patches.pet_component_patch')
-   local monkey_do = radiant.mods.require('stonehearth.components.pet.pet_component')
-   if monkey_see and monkey_do then
+   -- Patch for pet component
+   local pet_monkey_see = require('monkey_patches.pet_component_patch')
+   local pet_monkey_do = radiant.mods.require('stonehearth.components.pet.pet_component')
+   if pet_monkey_see and pet_monkey_do then
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching pet_component to add pet_skill_component')
-      radiant.mixin(monkey_do, monkey_see)
-      patches_applied = true
+      radiant.mixin(pet_monkey_do, pet_monkey_see)
    else
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch pet_component')
    end
+
+   -- Patch for shepherd class
+   local shepherd_monkey_see = require('monkey_patches.shepherd_class_patch')
+   local shepherd_monkey_do = radiant.mods.require('stonehearth_ace.jobs.shepherd')
+   if shepherd_monkey_see and shepherd_monkey_do then
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching AceShepherdClass')
+      radiant.mixin(shepherd_monkey_do, shepherd_monkey_see)
+   else
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch AceShepherdClass')
+   end
+
+   patches_applied = true
 end
 
 function luna_overhaul:_on_init()

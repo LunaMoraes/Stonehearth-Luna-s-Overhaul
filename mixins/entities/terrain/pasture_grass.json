@@ -1,0 +1,12 @@
+{
+   "entity_data": {
+      "stonehearth:evolve_data": {
+         "evolve_time": "15h"
+      }
+      ,
+      "stonehearth:animal_feed": {
+         "calorie_gain": 10,
+         "effect_loops": 6
+      }
+   }
+}

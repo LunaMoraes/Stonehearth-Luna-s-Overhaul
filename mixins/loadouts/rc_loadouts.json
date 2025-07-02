@@ -1,0 +1,19 @@
+{
+   "loadouts": {
+      "merchant_caravan": {
+         "content": {
+            "mixintypes": {
+               "footman": "remove"
+            },
+            "cleric": {
+               "ordinal": 2,
+               "display_name": "i18n(stonehearth:jobs.cleric.cleric_description.display_name)",
+               "type": "entity",
+               "uri": "stonehearth:cleric:talisman",
+               "icon": "file(images/items/cleric_tome.png)",
+               "amount": 1
+            }
+         }
+      }
+   }
+}

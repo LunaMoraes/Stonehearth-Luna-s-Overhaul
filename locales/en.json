@@ -9,6 +9,14 @@
             "therapist_branch_name": "Therapist Skilltree"
          }
       },
+      "jobs": {
+         "shepherd": {
+            "level_2_data": {
+               "perk_small_bonuses_name": "Resourceful Harvester",
+               "perk_small_bonuses_description": "Has a chance to harvest a small amount of extra resources from pasture animals."
+            }
+         }
+      },
       "buffs": {
          "pet_utility_level1": {
             "display_name": "Little Helper",
