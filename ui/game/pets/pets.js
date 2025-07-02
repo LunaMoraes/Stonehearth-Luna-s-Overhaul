@@ -3,6 +3,12 @@ let mainView = null;
 let petsLastSortKey = null;
 let petsLastSortDirection = 1;
 
+// Helper function from citizens.js to determine which of the 8 heart segments to use
+var getOctile = function(percentage) {
+   // return 0-8
+   return Math.round(percentage * 8);
+};
+
 App.StonehearthAcePetsView = App.View.extend({
    templateName: 'petsView',
    uriProperty: 'model',
@@ -15,7 +21,11 @@ App.StonehearthAcePetsView = App.View.extend({
       'stonehearth:attributes' : {},
       'stonehearth:expendable_resources' : {},
       'stonehearth:pet' : {},
-      'luna_overhaul:pet_skill': {}
+      'luna_overhaul:pet_skill': {},
+      // Simplified components, removed incapacitation
+      "stonehearth:buffs": {
+         "buffs_by_category": {}
+      }
    },
 
    init: function() {
@@ -66,6 +76,48 @@ App.StonehearthAcePetsView = App.View.extend({
       this._super();
    },
    
+   // This function is a simplified version of _updateHealth in citizens.js
+   _updatePetHealthData: function(pet_data) {
+      var self = this;
+      var currentHealth = pet_data['stonehearth:expendable_resources'].resources.health;
+      if (currentHealth == null) {
+         return;
+      }
+
+      currentHealth = Math.ceil(currentHealth);
+      var maxHealth = Math.ceil(pet_data['stonehearth:attributes'].attributes.max_health.effective_value);
+      var percentHealth = currentHealth / maxHealth;
+
+      var poisonBuffs = pet_data['stonehearth:buffs'].buffs_by_category.poison;
+      var isPoisoned = poisonBuffs && Object.keys(poisonBuffs).length > 0;
+      
+      var icon;
+      
+      if (currentHealth <= 0) {
+         icon = "heart_empty";
+      } else if (currentHealth >= maxHealth) {
+         icon = "heart_full"
+      } else {
+         icon = `heart_${getOctile(percentHealth)}_8`;
+      }
+
+      var value = percentHealth;
+      
+      if (isPoisoned) {
+         icon = "poisoned/" + icon;
+      }
+
+      // The final path to the image asset in the stonehearth_ace mod
+      icon = "/stonehearth_ace/ui/game/citizens/images/health/" + icon + ".png";
+
+      // Attach the calculated health data to the pet object
+      pet_data.health_data = {
+         icon: icon,
+         value: value,
+         isPoisoned: isPoisoned,
+      };
+   },
+
    _traceTownPets: function() {
       var playerId = App.stonehearthClient.getPlayerId()
       var self = this;
@@ -85,10 +137,12 @@ App.StonehearthAcePetsView = App.View.extend({
                      'stonehearth:buffs' : {
                         'buffs' : {
                            '*' : {}
-                        }
+                        },
+                        "buffs_by_category": {} // for poison check
                      },
                      'stonehearth:expendable_resources': {},
                      'luna_overhaul:pet_skill': {},
+                     'stonehearth:attributes': {},
                   },
                },
             };
@@ -140,36 +194,39 @@ App.StonehearthAcePetsView = App.View.extend({
                      
                      // Now process the filtered pets list
                      for (var i = 0; i < pets_list.length; i++){
+                        var current_pet = pets_list[i];
                         //Get health, hunger, social and sleepiness percentages
-                        var health_percentage = Math.round(((pets_list[i]['stonehearth:expendable_resources'].resource_percentages.health)*100)*10)/10;
-                        var hunger_percentage = Math.round(100-(Math.round(((pets_list[i]['stonehearth:expendable_resources'].resource_percentages.calories)*100)*10)/10)/10);
-                        var social_percentage = Math.round(((pets_list[i]['stonehearth:expendable_resources'].resource_percentages.social_satisfaction)*100)*10)/10;
-                        var sleepiness_percentage = Math.round(((pets_list[i]['stonehearth:expendable_resources'].resource_percentages.sleepiness)*100)*10)/10;
-                        pets_list[i].health = String(health_percentage)
-                        pets_list[i].hunger = String(hunger_percentage)
-                        pets_list[i].social = String(social_percentage)
-                        pets_list[i].sleepiness = String(sleepiness_percentage)
+                        var hunger_percentage = Math.round(100-(Math.round(((current_pet['stonehearth:expendable_resources'].resource_percentages.calories)*100)*10)/10)/10);
+                        var social_percentage = Math.round(((current_pet['stonehearth:expendable_resources'].resource_percentages.social_satisfaction)*100)*10)/10;
+                        var sleepiness_percentage = Math.round(((current_pet['stonehearth:expendable_resources'].resource_percentages.sleepiness)*100)*10)/10;
+                        
+                        // NEW: Calculate health data object instead of just percentage
+                        self._updatePetHealthData(current_pet);
+
+                        current_pet.hunger = String(hunger_percentage)
+                        current_pet.social = String(social_percentage)
+                        current_pet.sleepiness = String(sleepiness_percentage)
                         //Get pet status
-                        pets_list[i].activity = pets_list[i]['stonehearth:ai'].status_text_key
+                        current_pet.activity = current_pet['stonehearth:ai'].status_text_key
                         //Get pet Buffs
-                        var buff_keys = Object.keys(pets_list[i]['stonehearth:buffs'].buffs);
+                        var buff_keys = Object.keys(current_pet['stonehearth:buffs'].buffs);
                         var buff_list = [];
                         for (var j = 0; j < buff_keys.length; j++){
                            
-                           buff_list[j] = pets_list[i]['stonehearth:buffs'].buffs[buff_keys[j]];
+                           buff_list[j] = current_pet['stonehearth:buffs'].buffs[buff_keys[j]];
                            
                         }
-                        pets_list[i].buffs = buff_list;
+                        current_pet.buffs = buff_list;
 
                         //Get pet commands
-                        var command_keys = Object.keys(pets_list[i]['stonehearth:commands'].commands);
+                        var command_keys = Object.keys(current_pet['stonehearth:commands'].commands);
                         var command_list = [];
                         for (var j = 0; j < command_keys.length; j++){
                            
-                           command_list[j] = pets_list[i]['stonehearth:commands'].commands[command_keys[j]];
+                           command_list[j] = current_pet['stonehearth:commands'].commands[command_keys[j]];
                            
                         }
-                        pets_list[i].available_commands = command_list;
+                        current_pet.available_commands = command_list;
                                              
                      }
                      
@@ -209,7 +266,6 @@ App.StonehearthAcePetsView = App.View.extend({
 
       this.$().draggable({ handle: '.title' });
 
-      //not functional yet
       self.$().on('click', '.listTitle', function() {
          var newSortKey = $(this).attr('data-sort-key');
          if (newSortKey) {
@@ -234,20 +290,43 @@ App.StonehearthAcePetsView = App.View.extend({
       //Change pet selection on click
       self.$('#petTable').on('click', 'tr', function () {
          if(pets_list.length > 0){ //check if any pets are available to select
+            var selectedPet = pets_list[$(this).index()];
             if(!$(this).hasClass('selected')) {
                $('#petTable tr').removeClass('selected');
                $(this).addClass('selected');
-               self.set('selected', pets_list[$(this).index()]);
+               self.set('selected', selectedPet);
                self.set('selected_index', $(this).index());
             }
             //Re-select portrait
-            var uri = pets_list[$(this).index()].__self;
+            var uri = selectedPet.__self;
             var portrait_url = '/r/get_portrait/?type=headshot&animation=idle_breathe.json&entity=' + uri + '&cache_buster=' + Math.random();
             self.$('#selectedPortrait').css('background-image', 'url(' + portrait_url + ')');
             //Focus on entity and open pet sheet
             radiant.call('stonehearth:camera_look_at_entity', uri);
             radiant.call('stonehearth:select_entity', uri);
             radiant.call('radiant:play_sound', {'track' : 'stonehearth:sounds:ui:start_menu:focus' });
+
+            // Update health tooltip for the selected row
+            var healthData = selectedPet.health_data;
+            if (healthData) {
+               App.tooltipHelper.createDynamicTooltip($(this).find('.petHealth'), function () {
+                  var value = Math.floor(100 * healthData.value);
+                  var tooltipKey;
+                  if (healthData.isPoisoned) {
+                     tooltipKey = 'poisoned';
+                  } else if (healthData.value <= 0) {
+                     tooltipKey = 'dying'; // Using 'dying' tooltip for dead pets
+                  } else {
+                     tooltipKey = value >= 100 ? 'healthy' : 'hurt';
+                  }
+
+                  var i18nData = {value: value};
+                  var healthString = App.tooltipHelper.createTooltip(
+                     i18n.t(`stonehearth_ace:ui.game.citizens.health_tooltips.${tooltipKey}_title`, i18nData),
+                     i18n.t(`stonehearth_ace:ui.game.citizens.health_tooltips.${tooltipKey}_description`, i18nData));
+                  return $(healthString);
+               });
+            }
          }
       });
    },
@@ -276,8 +355,9 @@ App.StonehearthAcePetsView = App.View.extend({
                return sortDirection * aValue.localeCompare(bValue);
                
             case 'health':
-               aValue = parseFloat(a.health) || 0;
-               bValue = parseFloat(b.health) || 0;
+               // Sort by the numeric health value, not the icon path
+               aValue = (a.health_data && a.health_data.value) || 0;
+               bValue = (b.health_data && b.health_data.value) || 0;
                return sortDirection * (aValue - bValue);
                
             case 'hunger':

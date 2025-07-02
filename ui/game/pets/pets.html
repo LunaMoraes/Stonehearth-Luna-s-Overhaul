@@ -92,7 +92,8 @@
                                     {{i18n_key this.activity self=this}}
                                  </td>
                                  <td class="petHealth centralized">
-                                    {{i18n_key this.health self=this}}%
+                                    <!-- Changed from text to image -->
+                                    <img class="petHealthIcon" {{bind-attr src=this.health_data.icon}}/>
                                  </td>
                                  <td class="petHunger centralized">
                                     {{i18n_key this.hunger self=this}}%
