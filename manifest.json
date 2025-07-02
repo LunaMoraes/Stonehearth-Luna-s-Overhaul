@@ -41,7 +41,10 @@
 	"mixintos" : {
 		"/stonehearth_ace/locales/en.json" : "file(locales/en.json)",
 		"stonehearth:pet_collar": "file(mixins/pet_collar_training_mixin.json)",
-		"stonehearth:hotkeys" : "luna_overhaul:hotkeys"
+		"stonehearth:hotkeys" : "luna_overhaul:hotkeys",
+		"stonehearth_ace:terrain:pasture_grass:sprouting": "file(mixins/sprouting_pasture_grass.json)",
+		"stonehearth_ace:terrain:pasture_grass:short": "file(mixins/short_pasture_grass.json)",
+		"stonehearth_ace:terrain:pasture_grass": "file(mixins/pasture_grass.json)"
 	},
 	"ui" : {
 		"js": [
