@@ -1,0 +1,26 @@
+{
+   "type": "recipe",
+   "effort": 30,
+   "work_units": 6,
+   "recipe_name": "i18n(luna_overhaul:data.entities.weapons.poisoned_bow.display_name)",
+   "description": "i18n(luna_overhaul:data.jobs.herbalist.recipes.poisoned_bow.description)",
+   "flavor": "",
+   "portrait": "/luna_overhaul/entities/weapons/poisoned_weaponry/poisoned_weaponry/poisoned_bow.png",
+   "workshop": "stonehearth:herbalist:workbench",
+   "level_requirement": 4,
+   "ingredients": [
+      {
+         "uri": "stonehearth:weapons:recurve_bow",
+         "count": 1
+      },
+      {
+         "uri": "luna_overhaul:resources:poison",
+         "count": 3
+      }
+   ],
+   "produces": [
+      {
+         "item": "luna_overhaul:weapons:poisoned_bow"
+      }
+   ]
+}

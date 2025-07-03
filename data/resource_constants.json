@@ -1,9 +1,9 @@
-  {
-     "resources": {
-        "luxury_ores": {
-           "name": "i18n(my_mod:ui.data.constants.gem_resource_name)",
-           "icon": "stonehearth_ace/entities/resources/gold/gold_ore/sandstone_gold_ore.png",
-           "default_resource": "stonehearth:resources:gold:ore"
-        }
-     }
-  }
+{
+   "resources": {
+      "luxury_ores": {
+         "name": "i18n(luna_overhaul:ui.game.data.constants.luxury_ores_resource_name)",
+         "icon": "/stonehearth/entities/resources/gold/gold_ore/sandstone_gold_ore.png",
+         "default_resource": "stonehearth:resources:gold:ore"
+      }
+   }
+}

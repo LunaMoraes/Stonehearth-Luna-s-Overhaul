@@ -1,0 +1,26 @@
+{
+   "type": "recipe",
+   "effort": 35,
+   "work_units": 7,
+   "recipe_name": "i18n(luna_overhaul:data.entities.weapons.strong_poisoned_bow.display_name)",
+   "description": "i18n(luna_overhaul:data.jobs.herbalist.recipes.strong_poisoned_bow.description)",
+   "flavor": "",
+   "portrait": "/luna_overhaul/entities/weapons/poisoned_weaponry/strong_poisoned_weaponry/strong_poisoned_bow.png",
+   "workshop": "stonehearth:herbalist:workbench",
+   "level_requirement": 5,
+   "ingredients": [
+      {
+         "uri": "stonehearth:weapons:legendary:bow",
+         "count": 1
+      },
+      {
+         "uri": "luna_overhaul:resources:strong_poison",
+         "count": 3
+      }
+   ],
+   "produces": [
+      {
+         "item": "luna_overhaul:weapons:strong_poisoned_bow"
+      }
+   ]
+}

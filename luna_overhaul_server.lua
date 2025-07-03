@@ -19,8 +19,8 @@ local function monkey_patching()
    end
 
    -- Patch for shepherd class
-   local shepherd_monkey_see = require('monkey_patches.shepherd_class_patch')
-   local shepherd_monkey_do = radiant.mods.require('stonehearth_ace.jobs.shepherd')
+   local shepherd_monkey_see = require('monkey_patches.ace_shepherd')
+   local shepherd_monkey_do = radiant.mods.require('stonehearth.jobs.shepherd.shepherd')
    if shepherd_monkey_see and shepherd_monkey_do then
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching AceShepherdClass')
       radiant.mixin(shepherd_monkey_do, shepherd_monkey_see)
@@ -38,27 +38,13 @@ end
 function luna_overhaul:_on_required_loaded()
    radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server required_loaded called')
    
-   -- Always set up the listener for the ACE event in case it hasn't fired yet
+   -- We will now ONLY apply patches when we receive the official event from ACE.
+   -- This prevents the race condition and ensures all ACE modules are available.
    radiant.events.listen_once(radiant, 'stonehearth_ace:server:required_loaded', function()
-      radiant.log.write_('luna_overhaul', 0, 'ACE required_loaded event received, now applying Luna pet patches...')
+      radiant.log.write_('luna_overhaul', 0, 'ACE required_loaded event received, now applying Luna patches...')
       monkey_patching()
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching complete via ACE event')
    end)
-   
-   -- Check if ACE has already finished loading by trying to access ACE-specific functionality
-   -- If stonehearth_ace table exists and has been initialized, ACE has already loaded
-   local ace_loaded = false
-   if stonehearth_ace and stonehearth_ace._sv then
-      ace_loaded = true
-   end
-   
-   if ace_loaded then
-      radiant.log.write_('luna_overhaul', 0, 'ACE appears to have already loaded, applying Luna pet patches immediately...')
-      monkey_patching()
-      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching complete (immediate)')
-   else
-      radiant.log.write_('luna_overhaul', 0, 'ACE not yet fully loaded, waiting for ACE required_loaded event...')
-   end
 end
 
 -- Register event listeners (same pattern as ACE)

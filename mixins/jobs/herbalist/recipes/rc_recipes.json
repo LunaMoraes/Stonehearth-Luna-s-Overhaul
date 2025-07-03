@@ -1,0 +1,19 @@
+{
+   "craftable_recipes": {
+      "poisoned_weaponry": {
+         "name": "i18n(luna_overhaul:data.jobs.herbalist.recipes.poisoned_weaponry_name)",
+         "ordinal": 40,
+         "recipes": {
+            "weak_poisoned_bow": {
+               "recipe": "file(/jobs/herbalist/recipes/weak_poisoned_bow_recipe.json)"
+            },
+            "poisoned_bow": {
+               "recipe": "file(/jobs/herbalist/recipes/poisoned_bow_recipe.json)"
+            },
+            "strong_poisoned_bow": {
+               "recipe": "file(/jobs/herbalist/recipes/strong_poisoned_bow_recipe.json)"
+            }
+         }
+      }
+   }
+}

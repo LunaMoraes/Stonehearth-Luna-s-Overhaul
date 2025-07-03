@@ -5,9 +5,10 @@
             {
                "type": "gain_perk",
                "id": "shepherd_small_extra_bonuses",
-               "name": "i18n(luna_overhaul:jobs.shepherd.level_2_data.perk_small_bonuses_name)",
-               "description": "i18n(luna_overhaul:jobs.shepherd.level_2_data.perk_small_bonuses_description)",
-               "icon": "/luna_overhaul/jobs/shepherd/images/level2.png"
+               "name": "i18n(luna_overhaul:data.jobs.shepherd.level_2_data.perk_small_bonuses_name)",
+               "description": "i18n(luna_overhaul:data.jobs.shepherd.level_2_data.perk_small_bonuses_description)",
+               "icon": "/luna_overhaul/jobs/shepherd/images/level_2.png",
+               "level": 2
             }
          ]
       }

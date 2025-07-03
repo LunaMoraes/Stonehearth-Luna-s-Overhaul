@@ -1,0 +1,48 @@
+{
+   "type": "entity",
+   "mixins": "stonehearth:mixins:item_properties",
+   "components": {
+      "render_info": {
+         "scale": 0.1
+      },
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(strong_poisoned_bow.qb)"
+            ]
+         }
+      },
+      "mob": {
+         "model_origin": { "x": 0, "y": 0, "z": 0 }
+      },
+      "stonehearth:equipment_piece": {
+         "ilevel": 41,
+         "slot": "mainhand",
+         "roles": "archer_job"
+      }
+   },
+   "entity_data": {
+      "stonehearth:combat:weapon_data": {
+         "base_damage": 41,
+         "base_ranged_damage": 41
+      },
+      "stonehearth:catalog": {
+         "description": "i18n(luna_overhaul:data.entities.weapons.strong_poisoned_bow.description)",
+         "material_tags": [
+            "wood"
+         ]
+      },
+      "stonehearth:net_worth": {
+         "value_in_gold": 150,
+         "rarity": "rare"
+      },
+      "stonehearth:buffs": {
+         "inflictable_debuffs": {
+            "poison": {
+               "uri": "stonehearth_ace:buffs:poison:major_poison",
+               "chance": 0.7
+            }
+         }
+      }
+   }
+}

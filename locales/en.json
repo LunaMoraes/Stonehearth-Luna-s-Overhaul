@@ -10,10 +10,56 @@
          }
       },
       "jobs": {
+         "herbalist": {
+            "recipes": {
+               "poisoned_weaponry_name": "Poisoned Weaponry",
+               "weak_poisoned_bow": {
+                  "description": "Coat a bow with a mild toxin."
+               },
+               "poisoned_bow": {
+                  "description": "Coat a bow with a potent toxin."
+               },
+               "strong_poisoned_bow": {
+                  "description": "Coat a bow with a deadly toxin."
+               }
+            }
+         },
          "shepherd": {
             "level_2_data": {
                "perk_small_bonuses_name": "Resourceful Harvester",
-               "perk_small_bonuses_description": "Has a chance to harvest a small amount of extra resources from pasture animals."
+               "perk_small_bonuses_description": "Has a chance to harvest 2 extra resources from pasture animals."
+            }
+         }
+      },
+      "entities": {
+         "resources": {
+            "poison": {
+               "weak_poison": {
+                  "display_name": "Weak Poison",
+                  "description": "A mild toxin that can be used as a crafting ingredient."
+               },
+               "poison": {
+                  "display_name": "Poison",
+                  "description": "A potent toxin used in more advanced recipes."
+               },
+               "strong_poison": {
+                  "display_name": "Strong Poison",
+                  "description": "A deadly concoction required for the most lethal of creations."
+               }
+            }
+         },
+         "weapons": {
+            "weak_poisoned_bow": {
+               "display_name": "Weak Poisoned Bow",
+               "description": "This bow is coated in a mild toxin, giving its arrows a chance to poison targets."
+            },
+            "poisoned_bow": {
+               "display_name": "Poisoned Bow",
+               "description": "This bow has a toxin, giving its arrows an average chance to poison targets."
+            },
+            "strong_poisoned_bow": {
+               "display_name": "Strong Poisoned Bow",
+               "description": "This potent bow is treated with a powerful venom, giving its arrows a high chance to poison targets."
             }
          }
       },
@@ -96,6 +142,11 @@
       "game": {
          "citizens": {
             "no_citizens": "No citizens on town"
+         },
+         "data": {
+            "constants": {
+               "luxury_ores_resource_name": "Luxury Ores"
+            }
          },
          "pet_manager": {
             "current_owner": "Current owner: ",

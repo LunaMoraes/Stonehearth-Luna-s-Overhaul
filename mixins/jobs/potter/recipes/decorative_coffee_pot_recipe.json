@@ -1,7 +1,7 @@
 {
    "produces": [
       {
-         "item": "stonehearth:decoration:decorative_coffee_pot"
+         "item": "stonehearth_ace:decoration:decorative_coffee_pot"
       }
    ]
 }
