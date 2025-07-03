@@ -3,7 +3,9 @@
       "merchant_caravan": {
          "content": {
             "mixintypes": {
-               "footman": "remove"
+               "footman": "remove",
+               "herbalist": "remove",
+               "herbalist_pot": "remove"
             },
             "cleric": {
                "ordinal": 2,

@@ -52,6 +52,7 @@
 		"stonehearth:resources:silver:ore": "file(mixins/entities/resources/silver_ore.json)",
 		"stonehearth_ace/jobs/herbalist/recipes/rc_recipes.json": "file(mixins/jobs/herbalist/recipes/rc_recipes.json)",
 		"stonehearth/jobs/potter/recipes/decorative_vase_recipe.json": "file(mixins/jobs/potter/recipes/decorative_vase_recipe.json)",
+		"stonehearth/jobs/mason/recipes/stone_floor_candle_holder_recipe.json": "file(mixins/jobs/mason/recipes/stone_floor_candle_holder_recipe.json)",
 		"stonehearth_ace/jobs/potter/recipes/decorative_coffee_pot_recipe.json": "file(mixins/jobs/potter/recipes/decorative_coffee_pot_recipe.json)",
 		"stonehearth_ace/jobs/potter/recipes/decorative_teapot_recipe.json": "file(mixins/jobs/potter/recipes/decorative_teapot_recipe.json)",
 		"stonehearth_ace:terrain:pasture_grass:sprouting": "file(mixins/entities/terrain/sprouting_pasture_grass.json)",
