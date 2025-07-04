@@ -6,6 +6,13 @@
          "ordinal": 25,
          "combo1": "",
          "combo2": ""
+      },
+      "livestock:overview": {
+         "display_name": "i18n(luna_overhaul:ui.game.livestock_manager.title)",
+         "category": "menus",
+         "ordinal": 26,
+         "combo1": "",
+         "combo2": ""
       }
    }
 }

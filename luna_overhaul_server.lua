@@ -19,13 +19,33 @@ local function monkey_patching()
    end
 
    -- Patch for shepherd class
-   local shepherd_monkey_see = require('monkey_patches.ace_shepherd')
+   local shepherd_monkey_see = require('monkey_patches.luna_shepherd')
    local shepherd_monkey_do = radiant.mods.require('stonehearth.jobs.shepherd.shepherd')
    if shepherd_monkey_see and shepherd_monkey_do then
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching AceShepherdClass')
       radiant.mixin(shepherd_monkey_do, shepherd_monkey_see)
    else
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch AceShepherdClass')
+   end
+
+   -- Patch for town component
+   local town_monkey_see = require('monkey_patches.luna_town')
+   local town_monkey_do = radiant.mods.require('stonehearth.services.server.town.town')
+   if town_monkey_see and town_monkey_do then
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching Town to add pasture animal tracking')
+      radiant.mixin(town_monkey_do, town_monkey_see)
+   else
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch Town')
+   end
+
+   -- Patch for shepherd pasture component
+   local pasture_monkey_see = require('monkey_patches.luna_shepherd_pasture')
+   local pasture_monkey_do = radiant.mods.require('stonehearth.components.shepherd_pasture.shepherd_pasture_component')
+   if pasture_monkey_see and pasture_monkey_do then
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching ShepherdPastureComponent to notify town')
+      radiant.mixin(pasture_monkey_do, pasture_monkey_see)
+   else
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch ShepherdPastureComponent')
    end
 
    patches_applied = true

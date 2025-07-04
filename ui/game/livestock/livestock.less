@@ -1,0 +1,327 @@
+.backgroundContain (@image){
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-image: @image;
+}
+
+.livestockManager {
+   margin: 150px auto;
+   position: absolute;
+   left: 600px;
+   z-index: 0;
+
+   .window {
+      width: 900px;
+      height: 657px;
+   }
+   
+   .flex-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+   }
+
+   #livestockDetails {
+      margin-top: 3%;
+      height: 75%;
+      width: 30%;
+      display: inline-grid;
+      
+      h2 {
+         margin-left: 10px;
+      }
+      
+      #livestockDetailsInnerPane {
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+         text-align: center;
+
+         #selectedPortrait {
+            width: 100%;
+            height: 128px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+         }
+
+         #selectedName {
+            position: relative;
+            top: -10px;
+            text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
+            color: #ffc000;
+            font-family: 'groboldregular', 'ofelixgro';
+            font-size: 24px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 240px;
+            overflow: hidden
+         }
+
+         #selectedDescription {
+            position: relative;
+            top: -10px;
+            text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
+            font-family: 'groboldregular', 'ofelixgro';
+            font-size: 16px;
+            color: #cdc1a4;
+         }
+
+         #buffs {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            position: relative;
+            
+            .item {
+               display: inline-block;
+               vertical-align: top;
+               margin: 2px;
+               
+               img {
+                  width: 32px;
+                  height: 32px;
+                  display: block;
+               }
+            }
+         }
+
+         .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: flex-start;
+            position: relative; 
+            width: 100%;
+            margin-top: 15px;
+            bottom: unset;
+
+            a {
+               margin: 3px;
+            }
+            
+            button {
+               width: 200px;
+            }
+         }
+      }
+   }
+
+   .livestockList {
+      margin-top: 3%;
+      margin-left: 30px;
+      height: 60%;
+      width: 65%;
+   }
+
+   #tasksLivestockList {
+      height: 100%;
+      position: relative;
+      width: 100%;
+      
+      #listTitles {
+         margin-bottom: 5px;
+         padding: 0;
+         height: 30px;
+         
+         .listTitle {
+            display: inline-block;
+            text-align: center;
+            cursor: url(http://radiant/stonehearth/ui/root/css/images/cursors/Finalhand.cur), default;
+         }
+         
+         .hidden {
+            display: none;
+         }
+         
+         .statTitle:first-child {
+            padding-left: 23px;
+         }
+         
+         #tasksTitleName {
+            margin-left: 10px;
+            width: 120px;
+            margin-right: 15px;
+            text-align: left;
+         }
+         
+         .statTitle {
+            margin-left: -3px;
+            
+            .statButton {
+               &:hover:not(.disabled) {
+                  -webkit-filter: brightness(1);
+                  filter: brightness(1);
+               }
+               padding: 0px;
+               border-width: 6px 6px 8px 6px;
+            }
+            
+            .livestockStatImg {
+               height: 27px;
+               width: 27px;
+               margin: -4px -2px -2px 0px;
+            }
+         }
+         
+         #activityTitle {
+            margin-left: 60px;
+            text-align: left;
+            width: 80px;
+         }
+         
+         .listTitle[data-sort-key="health"] {
+            margin-left: 10px;
+            width: 40px;
+         }
+         
+         .listTitle[data-sort-key="hunger"] {
+            margin-left: 25px;
+            width: 60px;
+         }
+         
+         .listTitle[data-sort-key="social"] {
+            margin-left: 25px;
+            width: 60px;
+         }
+         
+         .listTitle h2 {
+            margin: 0;
+            font-size: 14px;
+            color: #ffc000;
+         }
+      }
+      
+      #listContent {
+         position: relative;
+         height: calc(100% - 40px);
+         width: 100%;
+         
+         &.innerBox {
+            margin-top: 2px;
+            background-position: center;
+            background-size: 1000% 1000%;
+            border-width: 11px 7px 14px 7px;
+            border-image: url(http://radiant/stonehearth/ui/root/css/images/gui/well.png) 11 7 14 7 repeat;
+            border-style: solid;
+            background-image: url(http://radiant/stonehearth/ui/root/css/images/gui/well.png);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 5px;
+            box-sizing: border-box;
+         }
+         
+         table {
+            width: 100%;
+            table-layout: fixed;
+            margin: 0;
+            position: relative;
+            
+            tr:nth-child(even) {
+               background: rgba(0,0,0,0.1);
+            }
+            
+            td {
+               vertical-align: middle;
+               text-align: center;
+               padding-top: 4px;
+            }
+            
+            td:not(.icon) {
+               padding-left: 10px;
+            }
+            
+            .icon {
+               width: 40px;
+               height: 32px;
+               padding-top: 4px;
+               
+               img {
+                  width: 24px;
+                  height: 24px;
+               }
+            }
+
+            .nameColumn {
+               width: 120px;
+               text-align: left;
+               vertical-align: middle;
+               text-shadow: -2px -2px 0px #000000, 0px -2px 0px #000000, 2px -2px 0px #000000, -2px 0px 0px #000000, 2px 0px 0px #000000, -2px 2px 0px #000000, 0px 2px 0px #000000, 2px 2px 0px #000000;
+               color: #ffc000;
+               font-family: 'groboldregular', 'ofelixgro';
+               font-size: 16px;
+               text-overflow: ellipsis;
+               white-space: nowrap;
+               overflow: hidden;
+               margin-right: 15px;
+            }
+
+            .livestockActivity {
+               width: 80px;
+               text-align: left;
+               padding-left: 12px;
+               white-space: nowrap;
+               overflow: hidden;
+               text-overflow: ellipsis;
+               color: #cdc1a4;
+               font-size: 12px;
+               margin-right: 5px;
+            }
+            
+            .livestockHealth {
+               width: 40px;
+               padding: 0;
+            }
+
+            .livestockHealthIcon {
+               height: 38px;
+               vertical-align: middle;
+            }
+
+            .livestockHunger, .livestockSocial {
+               text-align: center;
+               color: #cdc1a4;
+               font-size: 12px;
+               margin-right: 8px;
+               width: 60px;
+            }
+            
+            .centralized {
+               text-align: center;
+            }
+            
+            tr {
+               cursor: url(http://radiant/stonehearth/ui/root/css/images/cursors/Finalhand.cur), default;
+               z-index: 10;
+               
+               &:hover {
+                  background-color: rgba(143, 120, 70, 0.3);
+               }
+            }
+            
+            tr.selected {
+               background-color: #8f7846;
+               
+               &:hover {
+                  background-color: #8f7846;
+               }
+            }
+         }
+         
+         .noLivestock {
+            text-align: center;
+            color: #cdc1a4;
+            font-size: 16px;
+            padding: 20px;
+         }
+      }
+   }
+
+   .hasLivestockIcon {
+      content: url(../livestock/images/livestock.png);
+   }
+   
+   .livestockStatImg {
+      .backgroundContain(url(/stonehearth_ace/ui/game/images/health.png));
+   }
+}

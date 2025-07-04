@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
    $(top).on("radiant_remove_ladder", function (_, e) {
       var item = e.entity;
@@ -1240,6 +1239,25 @@ var StonehearthClient;
             } else {
                radiant.call('radiant:play_sound', { 'track': 'stonehearth_ace:sounds:ui:mercantile_menu:open' });
                self._petManager.show();
+            }
+         }
+      },
+
+      _livestockManager: null,
+      // Luna Overhaul: livestock management function
+      showLivestockManager: function(hideOnCreate) {
+         // toggle the livestock manager view
+         var self = this;
+         
+         if (!self._livestockManager || self._livestockManager.isDestroyed || self._livestockManager.isDestroying) {
+            self._livestockManager = App.gameView.addView(App.LunaOverhaulLivestockView, { hideOnCreate: hideOnCreate });
+         } else if(!hideOnCreate) {
+            if (self._livestockManager.get('isVisible')) {
+               radiant.call('radiant:play_sound', { 'track': 'stonehearth:sounds:ui:carpenter_menu:menu_closed' });
+               self._livestockManager.hide();
+            } else {
+               radiant.call('radiant:play_sound', { 'track': 'stonehearth_ace:sounds:ui:mercantile_menu:open' });
+               self._livestockManager.show();
             }
          }
       },

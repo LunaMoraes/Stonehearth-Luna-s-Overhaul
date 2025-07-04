@@ -1,0 +1,111 @@
+<script type="text/x-handlebars" data-template-name="livestockView">
+   <div id="livestockManagement" class="gui livestockManager">
+      <div class="window">
+         <div class="title">{{i18n luna_overhaul:ui.game.livestock_manager.title}}<div class="closeButton"></div></div>
+   
+         <div class="flex-container">
+
+            <div id="livestockDetails" class="">
+               <h2>{{i18n luna_overhaul:ui.game.livestock_manager.details}}</h2>
+               <div id="livestockDetailsInnerPane" class="downSection">
+                  {{#if view.selected}}
+                  <center>
+                  <div id="selectedPortrait" class='portrait'/>
+                  <div id="selectedName">
+                     {{view.selected.display_name}}
+                  </div>
+                  <div id="selectedDescription">
+                     {{i18n_key view.selected.stonehearth:unit_info.description self=view.selected}}
+                  </div>
+                  
+                  <div id="buffs">
+                     {{#each view.selected.buffs itemView="stonehearthBuffItem"}}
+                        <div class="item" {{bind-attr uri=this.uri}}>
+                           <img {{bind-attr src=this.icon}} />
+                        </div>
+                     {{/each}}
+                  </div>
+
+                  <div class="toolbar">
+                     {{#each view.selected.available_commands}}
+                        <a {{bind-attr id=command.name}} href="#" {{action "doCommand" this view.selected target="view"}} class='uisounds'>
+                           <button class="brown" {{bind-attr class=":commandButton enabled:buttonEnabled:buttonDisabled"}}>
+                              {{i18n_key this.display_name self=view.selected}}
+                           </button>
+                        </a>
+                     {{/each}}
+                  </div>
+                  </center>
+                  {{else}}
+                     <div class="noLivestock centralized">
+                        {{i18n luna_overhaul:ui.game.livestock_manager.no_livestock}}
+                     </div>
+                  {{/if}}
+               </div>
+            </div>
+            <div id="tasksLivestockList" class="livestockList">
+               <div id="listTitles">
+                  <div class="listTitle statTitle" data-sort-key="icon">
+                     <button class="brown statButton nameIcon">
+                        <div class="livestockStatImg"></div>
+                     </button>
+                  </div>
+                  <div class="listTitle" id="tasksTitleName" data-sort-key="name">
+                     <h2>{{i18n luna_overhaul:ui.game.livestock_manager.name}}</h2>
+                  </div>
+                  <div class="listTitle" id="activityTitle" data-sort-key="activity">
+                     <h2>{{i18n luna_overhaul:ui.game.livestock_manager.activity}}</h2>
+                  </div>
+                  <div class="listTitle" data-sort-key="health">
+                     <h2>{{i18n luna_overhaul:ui.game.livestock_manager.health}}</h2>
+                  </div>
+                  <div class="listTitle" data-sort-key="hunger">
+                     <h2>{{i18n luna_overhaul:ui.game.livestock_manager.hunger}}</h2>
+                  </div>
+                  <div class="listTitle" data-sort-key="social">
+                     <h2>{{i18n luna_overhaul:ui.game.livestock_manager.social}}</h2>
+                  </div>
+               </div>
+               <div id="listContent" class="innerBox">
+                  <table id="livestockTable">
+                     <tbody>
+                        {{#if view.livestock_list}}
+                           {{#each view.livestock_list}}
+                              <tr class="livestockRow uisounds">
+                                 <td class="icon">
+                                    <img class="hasLivestockIcon"/>
+                                 </td>
+                                 <td class="nameColumn">
+                                    {{this.display_name}}
+                                 </td>
+                                 <td class="livestockActivity centralized">
+                                    {{i18n_key this.activity self=this}}
+                                 </td>
+                                 <td class="livestockHealth centralized">
+                                    <img class="livestockHealthIcon" {{bind-attr src=this.health_data.icon}}/>
+                                 </td>
+                                 <td class="livestockHunger centralized">
+                                    {{this.hunger}}%
+                                 </td>
+                                 <td class="livestockSocial centralized">
+                                    {{this.social}}%
+                                 </td>
+                              </tr>
+                           {{/each}}
+                        {{else}}
+                           <tr class="livestockRow">
+                              <td colspan="6">
+                                 <div class="noLivestock centralized">
+                                    {{i18n luna_overhaul:ui.game.livestock_manager.no_livestock}}
+                                 </div>
+                              </td>
+                           </tr>
+                        {{/if}}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</script>

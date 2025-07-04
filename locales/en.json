@@ -163,6 +163,18 @@
             "exp_bar": {
                "description": "Experience progress towards next level"
             }
+         },
+         "livestock_manager": {
+            "title": "Livestock Management",
+            "details": "Animal Details",
+            "name": "Name",
+            "activity": "Activity",
+            "health": "Health",
+            "hunger": "Hunger",
+            "social": "Social",
+            "mood": "Mood",
+            "no_livestock": "You have no livestock available",
+            "release_animal": "Release Animal"
          }
       }
    }

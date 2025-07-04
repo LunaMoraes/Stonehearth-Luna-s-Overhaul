@@ -1,0 +1,14 @@
+{
+   "town_menu": {
+      "items": {
+         "livestock_manager": {
+            "ordinal": 5,
+            "name": "i18n(luna_overhaul:ui.game.livestock_manager.title)",
+            "description": "i18n(luna_overhaul:ui.game.livestock_manager.title)",
+            "class": "dock",
+            "icon": "/luna_overhaul/ui/game/start_menu/images/livestock.png",
+            "hotkey_action": "livestock:overview"
+         }
+      }
+   }
+}
