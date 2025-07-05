@@ -6,7 +6,10 @@ local log = radiant.log.create_logger('luna_overhaul')
 -- This function will be called by the UI to get the list of animals.
 function LunaTown:get_pasture_animals()
    if not self._pasture_animals then
-      self._pasture_animals = {}
+      if not self._sv.pasture_animals then
+         self._sv.pasture_animals = {}
+      end
+      self._pasture_animals = self._sv.pasture_animals
    end
    return self._pasture_animals
 end
@@ -16,9 +19,20 @@ function LunaTown:add_pasture_animal(animal)
    if not self._pasture_animals then
       self._pasture_animals = {}
    end
-   log:info('Adding pasture animal ' .. tostring(animal) .. ' to town tracker')
+   log:info('LUNA DEBUG: Adding pasture animal %s (URI: %s) to town tracker', tostring(animal), animal:get_uri())
+   
+   -- Let's check the animal's components when we add it to town tracking
+   local buffs = animal:get_component('stonehearth:buffs')
+   local commands = animal:get_component('stonehearth:commands')
+   local ai = animal:get_component('stonehearth:ai')
+   
+   log:info('LUNA DEBUG: Town add - Animal %s has buffs: %s, commands: %s, ai: %s', 
+      tostring(animal), tostring(buffs), tostring(commands), tostring(ai))
+   
    self._pasture_animals[animal:get_id()] = animal
    self:_save_pasture_animals_sv()
+   
+   log:info('LUNA DEBUG: Town tracking updated, total animals: %d', radiant.size(self._pasture_animals))
 end
 
 -- This function will be called by pastures when an animal is removed.
@@ -43,7 +57,10 @@ end
 local old_activate = Town.activate
 function LunaTown:activate(...)
    -- Initialize our table from saved variables, or create it if it doesn't exist.
-   self._pasture_animals = self._sv.pasture_animals or {}
+   if not self._sv.pasture_animals then
+      self._sv.pasture_animals = {}
+   end
+   self._pasture_animals = self._sv.pasture_animals
    
    -- Call the original activate function.
    old_activate(self, ...)

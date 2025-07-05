@@ -252,8 +252,13 @@ App.LunaOverhaulLivestockView = App.View.extend({
       var maxHealth = Math.ceil(animal_data['stonehearth:attributes'].attributes.max_health.effective_value);
       var percentHealth = currentHealth / maxHealth;
 
-      var poisonBuffs = animal_data['stonehearth:buffs'].buffs_by_category.poison;
-      var isPoisoned = poisonBuffs && Object.keys(poisonBuffs).length > 0;
+      // Safely check for poison buffs - newly born animals might not have buffs fully initialized
+      var isPoisoned = false;
+      var buffs_component = animal_data['stonehearth:buffs'];
+      if (buffs_component && buffs_component.buffs_by_category && buffs_component.buffs_by_category.poison) {
+         var poisonBuffs = buffs_component.buffs_by_category.poison;
+         isPoisoned = poisonBuffs && Object.keys(poisonBuffs).length > 0;
+      }
       
       var icon;
       
