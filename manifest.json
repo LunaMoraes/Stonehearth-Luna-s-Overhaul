@@ -81,23 +81,22 @@
 	},
 	"ui" : {
 		"html": [
+			"file(ui/game/pets/pets.html)",
 			"file(ui/game/livestock/livestock.html)"
 		],
 		"js": [
+			"file(ui/game/pets/pets.js)",
 			"file(ui/console/pet_console_commands.js)",
 			"file(ui/game/livestock/livestock.js)"
 		],
 		"less": [
+			"file(ui/game/pets/pets.less)",
 			"file(ui/game/livestock/livestock.less)"
 		]
 	},
 	"overrides" : {
 		"stonehearth/ui/game/citizens/citizens.html" : "file(ui/game/citizens/citizens.html)",
 		"stonehearth/ui/game/citizens/citizens.js" : "file(ui/game/citizens/citizens.js)",
-		"stonehearth_ace/ui/game/pets/pets.html" : "file(ui/game/pets/pets.html)",
-		"stonehearth_ace/ui/game/pets/pets.js" : "file(ui/game/pets/pets.js)",
-		"stonehearth_ace/ui/game/pets/pets.less" : "file(ui/game/pets/pets.less)",
-		"stonehearth_ace/ui/game/start_menu/images/pets.png" : "file(ui/game/start_menu/images/pets.png)",
 		"stonehearth/ui/game/start_menu/start_menu.js" : "file(ui/game/start_menu/start_menu.js)",
 		"stonehearth/ui/root/js/stonehearth/stonehearth_client.js" : "file(ui/root/js/stonehearth/stonehearth_client.js)"
 	},

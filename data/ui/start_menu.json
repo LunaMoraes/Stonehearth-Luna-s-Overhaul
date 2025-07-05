@@ -1,6 +1,14 @@
 {
    "town_menu": {
       "items": {
+         "pet_manager": {
+            "ordinal": 4,
+            "name": "i18n(stonehearth_ace:ui.game.menu.pet_manager.display_name)",
+            "description": "i18n(stonehearth_ace:ui.game.menu.pet_manager.description)",
+            "class": "dock",
+            "icon": "/luna_overhaul/ui/game/start_menu/images/pets.png",
+            "hotkey_action": "pet:overview"
+         },
          "livestock_manager": {
             "ordinal": 5,
             "name": "i18n(luna_overhaul:ui.game.livestock_manager.title)",
