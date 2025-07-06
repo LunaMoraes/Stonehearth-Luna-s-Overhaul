@@ -177,6 +177,12 @@
             "mood": "Mood",
             "no_livestock": "You have no livestock available",
             "release_animal": "Release Animal"
+         },
+         "zones_mode": {
+            "pasture": {
+               "auto_butcher": "Auto Butcher",
+               "auto_butcher_description": "Automatically butcher adult animals for meat resources when the pasture reaches 2/3 capacity."
+            }
          }
       }
    }

@@ -77,7 +77,7 @@
 		"stonehearth_ace:rayyas_children:jobs:trapper": "file(mixins/jobs/trapper/rc_trapper_description.json)",
 		"stonehearth_ace:rayyas_children:jobs:weaver": "file(mixins/jobs/weaver/rc_weaver_description.json)",
 		"stonehearth_ace:rayyas_children:jobs:geomancer": "file(mixins/jobs/geomancer/rc_geomancer_description.json)",
-		"stonehearth_ace:shepherd:shepherd_pasture": "file(mixins/jobs/shepherd/shepherd_pasture/shepherd_pasture.json)",
+		"stonehearth:shepherd:shepherd_pasture": "file(mixins/jobs/shepherd/shepherd_pasture/shepherd_pasture.json)",
 		"stonehearth_ace:loadouts:rayyas_children": "file(mixins/loadouts/rc_loadouts.json)"
 	},
 	"ui" : {
@@ -123,6 +123,10 @@
 		},
 		"pet_change_branch_command": {
 			"controller": "file(call_handlers/pet_commands.lua)",
+			"endpoint": "server"
+		},
+		"set_pasture_auto_butcher": {
+			"controller": "file(call_handlers/pasture_call_handler.lua)",
 			"endpoint": "server"
 		}
 	}

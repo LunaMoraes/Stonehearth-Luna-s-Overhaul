@@ -57,18 +57,12 @@ end
 
 function luna_overhaul:_on_required_loaded()
    radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server required_loaded called')
-   
-   -- We will now ONLY apply patches when we receive the official event from ACE.
-   -- This prevents the race condition and ensures all ACE modules are available.
-   radiant.events.listen_once(radiant, 'stonehearth_ace:server:required_loaded', function()
-      radiant.log.write_('luna_overhaul', 0, 'ACE required_loaded event received, now applying Luna patches...')
-      monkey_patching()
-      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching complete via ACE event')
-   end)
+   monkey_patching()
+   radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching complete via ACE event')
 end
 
 -- Register event listeners (same pattern as ACE)
 radiant.events.listen(luna_overhaul, 'radiant:init', luna_overhaul, luna_overhaul._on_init)
-radiant.events.listen(radiant, 'radiant:required_loaded', luna_overhaul, luna_overhaul._on_required_loaded)
+radiant.events.listen(radiant, 'stonehearth_ace:server:required_loaded', luna_overhaul, luna_overhaul._on_required_loaded)
 
 return luna_overhaul

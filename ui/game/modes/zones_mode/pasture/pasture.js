@@ -61,12 +61,16 @@ App.StonehearthPastureView = App.StonehearthBaseZonesModeView.extend({
       self.$('#collectStraysCheckbox').change(function() {
          radiant.call('stonehearth_ace:set_pasture_collect_strays', self.get('uri'), this.checked);
       });
+      self.$('#autoButcherCheckbox').change(function() {
+         radiant.call('luna_overhaul:set_pasture_auto_butcher', self.get('uri'), this.checked);
+      });
 
       // ACE tooltips
       App.guiHelper.addTooltip(self.$('#maintainAnimalsLabel'), 'stonehearth_ace:ui.game.zones_mode.pasture.maintain_animals_description');
       App.guiHelper.addTooltip(self.$('#harvestAnimals'), 'stonehearth_ace:ui.game.zones_mode.pasture.harvest_animals_renewable_description');
       App.guiHelper.addTooltip(self.$('#harvestGrass'), 'stonehearth_ace:ui.game.zones_mode.pasture.harvest_grass_description');
       App.guiHelper.addTooltip(self.$('#collectStrays'), 'stonehearth_ace:ui.game.zones_mode.pasture.collect_strays_description');
+      App.guiHelper.addTooltip(self.$('#autoButcher'), 'luna_overhaul:ui.game.zones_mode.pasture.auto_butcher_description');
    },
 
    willDestroyElement: function() {
@@ -179,10 +183,14 @@ App.StonehearthPastureView = App.StonehearthBaseZonesModeView.extend({
       var harvestAnimals = self.get('model.stonehearth:shepherd_pasture.harvest_animals_renewable');
       var harvestGrass = self.get('model.stonehearth:shepherd_pasture.harvest_grass');
       var collectStrays = self.get('model.stonehearth:shepherd_pasture.collect_strays') === false ? false : true;
+      var autoButcher = self.get('model.stonehearth:shepherd_pasture.auto_butcher');
+      
+      autoButcher = autoButcher === true ? true : false;
 
       self.$('#harvestAnimalsCheckbox').prop('checked', harvestAnimals);
       self.$('#harvestGrassCheckbox').prop('checked', harvestGrass);
       self.$('#collectStraysCheckbox').prop('checked', collectStrays);
+      self.$('#autoButcherCheckbox').prop('checked', autoButcher);
    }.observes('model.stonehearth:shepherd_pasture'),
 
    _tracedShepherdJobInfo: function() {
