@@ -96,11 +96,18 @@ App.LunaOverhaulLivestockView = App.View.extend({
                         animal.social = 0;
                      }
 
-                     animal.buffs = radiant.map_to_array(animal['stonehearth:buffs'].buffs);
-                     animal.available_commands = radiant.map_to_array(animal['stonehearth:commands'].commands);
+                     animal.buffs = animal['stonehearth:buffs'] && animal['stonehearth:buffs'].buffs ? 
+                                    radiant.map_to_array(animal['stonehearth:buffs'].buffs) : [];
+                     animal.available_commands = animal['stonehearth:commands'] && animal['stonehearth:commands'].commands ?
+                                               radiant.map_to_array(animal['stonehearth:commands'].commands) : [];
 
                      // Set activity status
-                     animal.activity = animal['stonehearth:ai'].status_text_key;
+                     if (animal['stonehearth:ai'] && animal['stonehearth:ai'].status_text_key) {
+                        animal.activity = animal['stonehearth:ai'].status_text_key;
+                     } else {
+                        // For animals without AI (like eggs), set a default activity
+                        animal.activity = 'Egg State';
+                     }
 
                      // Handle animal name - livestock don't have custom names, use catalog data            
                      // Try to get display name from unit_info first
@@ -243,12 +250,36 @@ App.LunaOverhaulLivestockView = App.View.extend({
    // This function is adapted from pets.js _updatePetHealthData
    _updateLivestockHealthData: function(animal_data) {
       var self = this;
+      
+      // Check if the animal has expendable_resources component (eggs don't)
+      if (!animal_data['stonehearth:expendable_resources'] || !animal_data['stonehearth:expendable_resources'].resources) {
+         // For animals without health resources (like eggs), set default health data
+         animal_data.health_data = {
+            icon: "/stonehearth_ace/ui/game/citizens/images/health/heart_full.png",
+            value: 1.0,
+            isPoisoned: false,
+         };
+         return;
+      }
+      
       var currentHealth = animal_data['stonehearth:expendable_resources'].resources.health;
       if (currentHealth == null) {
          return;
       }
 
       currentHealth = Math.ceil(currentHealth);
+      
+      // Check if the animal has attributes component
+      if (!animal_data['stonehearth:attributes'] || !animal_data['stonehearth:attributes'].attributes) {
+         // Fallback for animals without proper attributes
+         animal_data.health_data = {
+            icon: "/stonehearth_ace/ui/game/citizens/images/health/heart_full.png",
+            value: 1.0,
+            isPoisoned: false,
+         };
+         return;
+      }
+      
       var maxHealth = Math.ceil(animal_data['stonehearth:attributes'].attributes.max_health.effective_value);
       var percentHealth = currentHealth / maxHealth;
 

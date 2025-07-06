@@ -9,10 +9,10 @@
 		   },
          "perks": [
 				{
-               "name": "i18n(luna_overhaul:data.jobs.shepherd.shepherd_description.level_2_data.archer_name)",
+               "name": "i18n(luna_overhaul:data.jobs.shepherd.level_2_data.archer_name)",
                "id": "shepherd_job_opportunities",
-               "icon": "/luna_overhaul/mixins/jobs/shepherd/images/level_2.png",
-               "description": "i18n(luna_overhaul:data.jobs.shepherd.shepherd_description.level_2_data.archer_description)",
+               "icon": "/luna_overhaul/mixins/jobs/shepherd/images/job_opportunities.png",
+               "description": "i18n(luna_overhaul:data.jobs.shepherd.level_2_data.archer_description)",
                "level": 2
             }
          ]
