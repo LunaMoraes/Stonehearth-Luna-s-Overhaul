@@ -77,6 +77,7 @@
 		"stonehearth_ace:rayyas_children:jobs:trapper": "file(mixins/jobs/trapper/rc_trapper_description.json)",
 		"stonehearth_ace:rayyas_children:jobs:weaver": "file(mixins/jobs/weaver/rc_weaver_description.json)",
 		"stonehearth_ace:rayyas_children:jobs:geomancer": "file(mixins/jobs/geomancer/rc_geomancer_description.json)",
+		"stonehearth_ace:shepherd:shepherd_pasture": "file(mixins/jobs/shepherd/shepherd_pasture/shepherd_pasture.json)",
 		"stonehearth_ace:loadouts:rayyas_children": "file(mixins/loadouts/rc_loadouts.json)"
 	},
 	"ui" : {
@@ -98,6 +99,8 @@
 		"stonehearth/ui/game/citizens/citizens.html" : "file(ui/game/citizens/citizens.html)",
 		"stonehearth/ui/game/citizens/citizens.js" : "file(ui/game/citizens/citizens.js)",
 		"stonehearth/ui/game/start_menu/start_menu.js" : "file(ui/game/start_menu/start_menu.js)",
+		"stonehearth/ui/game/modes/zones_mode/pasture/pasture.html": "file(ui/game/modes/zones_mode/pasture/pasture.html)",
+		"stonehearth/ui/game/modes/zones_mode/pasture/pasture.js": "file(ui/game/modes/zones_mode/pasture/pasture.js)",
 		"stonehearth/ui/root/js/stonehearth/stonehearth_client.js" : "file(ui/root/js/stonehearth/stonehearth_client.js)"
 	},
 	"server_init_script": "file(luna_overhaul_server)",
