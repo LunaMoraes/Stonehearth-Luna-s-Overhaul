@@ -51,6 +51,10 @@
             }
          },
          "weapons": {
+            "ceramic_mace": {
+               "display_name": "Ceramic Mace",
+               "description": "A sturdy mace crafted from hardened clay. While not as durable as metal, it serves well for holy warriors."
+            },
             "weak_poisoned_bow": {
                "display_name": "Weak Poisoned Bow",
                "description": "This bow is coated in a mild toxin, giving its arrows a chance to poison targets."

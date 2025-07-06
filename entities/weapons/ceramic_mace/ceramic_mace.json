@@ -2,29 +2,57 @@
    "mixins": "stonehearth_ace:mixins:weapons:mainhand_hacking",
    "type": "entity",
    "components": {
+      "model_variants": {
+         "default": {
+            "models": [
+               "file(ceramic_mace_equipped.qb)"
+            ]
+         }
+      },
       "stonehearth:entity_forms": {
          "iconic_form": "file(ceramic_mace_iconic.json)"
       },
       "stonehearth:equipment_piece": {
-         "no_drop": true,
          "required_job_level": 1,
-         "ilevel": 12
+         "ilevel": 11,
+         "roles": ["cleric_job"],
+         "equip_effect": "stonehearth:effects:weapon_level_up",
+         "postures": [
+            "stonehearth:combat",
+            "stonehearth:patrol"
+         ]
       }
    },
    "entity_data": {
       "stonehearth:combat:weapon_data": {
-         "base_damage": 22
+         "base_damage": 13,
+         "reach": 1.5
+      },
+      "stonehearth:combat:melee_attacks": [
+         {
+            "name": "combat_1h_forehand",
+            "effect": "combat_1h_forehand",
+            "active_frame": 16,
+            "cooldown": 0,
+            "priority": 0
+         }
+      ],
+      "stonehearth:net_worth": {
+         "value_in_gold": 20,
+         "rarity": "common",
+         "shop_info": {
+            "buyable": true,
+            "sellable": true,
+            "shopkeeper_level": 2,
+            "shopkeeper_type": "caravan"
+         }
       },
       "stonehearth:catalog": {
-         "display_name": "i18n(stonehearth:entities.weapons.bronze_mace.display_name)",
-         "description": "i18n(stonehearth:entities.weapons.bronze_mace.description)",
+         "display_name": "i18n(luna_overhaul:data.entities.weapons.ceramic_mace.display_name)",
+         "description": "i18n(luna_overhaul:data.entities.weapons.ceramic_mace.description)",
          "icon": "file(ceramic_mace.png)",
-         "material_tags": [
-            "bronze",
-            "mace",
-            "crafted",
-            "rc_made"
-         ]
+         "category": "weapons",
+         "material_tags": ["clay", "rc_made", "melee_weapon", "stockpile_weapon"]
       }
    }
 }

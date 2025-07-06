@@ -4,5 +4,11 @@
    "parent_level_requirement": 0,
    "equipment": {
       "mainhand": "luna_overhaul:weapons:ceramic_mace"
+   },
+   "equipment_preferences": {
+      "mixintypes": {
+         "default_role": "override"
+      },
+      "default_role": "support_cleric"
    }
 }

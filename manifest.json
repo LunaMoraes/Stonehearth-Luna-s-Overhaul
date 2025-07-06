@@ -39,7 +39,7 @@
 		"resources:weak_poison": "file(entities/resources/poison/weak_poison/weak_poison.json)",
 		"resources:poison": "file(entities/resources/poison/poison/poison.json)",
 		"resources:strong_poison": "file(entities/resources/poison/strong_poison/strong_poison.json)",
-		"weapons:ceramic_mace": "file(entities/weapons/ceramic_mace)",
+		"weapons:ceramic_mace": "file(entities/weapons/ceramic_mace/ceramic_mace.json)",
 		"weapons:weak_poisoned_bow": "file(entities/weapons/poisoned_weaponry/weak_poisoned_weaponry/weak_poisoned_bow.json)",
 		"weapons:poisoned_bow": "file(entities/weapons/poisoned_weaponry/poisoned_weaponry/poisoned_bow.json)",
 		"weapons:strong_poisoned_bow": "file(entities/weapons/poisoned_weaponry/strong_poisoned_weaponry/strong_poisoned_bow.json)"

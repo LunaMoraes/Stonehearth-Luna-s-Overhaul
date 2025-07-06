@@ -1,19 +1,20 @@
 {
+   "mixins": "stonehearth:mixins:item_properties",
    "type": "entity",
    "components": {
       "model_variants": {
          "default": {
             "models": [
-               "file(ceramic_mace_iconic.qb)"
+               "file(ceramic_mace.qb)"
             ]
          }
-      },
-      "mob": {
-         "model_origin": { "x": -0.05, "y": 0, "z": 0.05 }
       }
    },
    "entity_data": {
       "stonehearth:catalog": {
+         "display_name": "i18n(luna_overhaul:data.entities.weapons.ceramic_mace.display_name)",
+         "description": "i18n(luna_overhaul:data.entities.weapons.ceramic_mace.description)",
+         "icon": "file(ceramic_mace.png)",
          "is_item": true,
          "category": "weapons"
       }
