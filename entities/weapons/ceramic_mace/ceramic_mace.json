@@ -20,7 +20,8 @@
          "postures": [
             "stonehearth:combat",
             "stonehearth:patrol"
-         ]
+         ],
+         "no_drop": true
       }
    },
    "entity_data": {
