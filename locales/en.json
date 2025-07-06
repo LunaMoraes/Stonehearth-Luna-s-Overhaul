@@ -27,7 +27,9 @@
          "shepherd": {
             "level_2_data": {
                "perk_small_bonuses_name": "Resourceful Harvester",
-               "perk_small_bonuses_description": "Has a chance to harvest 2 extra resources from pasture animals."
+               "perk_small_bonuses_description": "Has a chance to harvest 2 extra resources from pasture animals.",
+               "archer_name": "Job Opportunities",
+               "archer_description": "A shepherd's life is one of constant vigilance. Protecting the flock from swift predators has honed the shepherd's eye and steadied their hand. Rather than settling down, they have chosen to perfect these skills, trading the crook for a bow to become a dedicated hunter and defender of the settlement. See the promotion menu for details."
             }
          }
       },

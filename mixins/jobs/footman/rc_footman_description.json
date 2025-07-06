@@ -1,4 +1,17 @@
 {
    "parent_job": "stonehearth:jobs:cleric",
-   "parent_level_requirement": 2
+   "parent_level_requirement": 2,
+   "level_data": {
+      "3": {
+         "perks": [
+            {
+               "type": "apply_chained_buff",
+               "id": "footman_training_3",
+               "buff_name": "stonehearth_ace:buffs:0_footman:training_3",
+               "last_buff": "stonehearth_ace:buffs:0_footman:training_2",
+               "demote_fn": "remove_buff"
+            }
+         ]
+      }
+   }
 }

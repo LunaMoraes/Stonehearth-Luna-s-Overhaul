@@ -1,5 +1,21 @@
 {
    "display_order": 7,
    "parent_job": "stonehearth:jobs:worker",
-   "parent_level_requirement": 0
+   "parent_level_requirement": 0,
+   "level_data": {
+      "2": {
+         "mixintypes": {
+				"perks": "override"
+		   },
+         "perks": [
+				{
+               "name": "i18n(luna_overhaul:jobs.shepherd.shepherd_description.level_2_data.archer_name)",
+               "id": "shepherd_job_opportunities",
+               "icon": "/luna_overhaul/jobs/shepherd/images/job_opportunities.png",
+               "description": "i18n(stonehearth_ace:jobs.shepherd.shepherd_description.level_2_data.archer_description)",
+               "level": 2
+            }
+         ]
+      }
+   }
 }
