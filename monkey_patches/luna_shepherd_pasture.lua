@@ -157,8 +157,8 @@ function LunaShepherdPastureComponent:_check_auto_butcher()
    local current_population = self._sv.num_critters
    local max_population = self:get_max_animals()
 
-   -- Check if we're at 2/3 capacity (rounded up)
-   local threshold = math.ceil(max_population * 2 / 3)
+   -- Check if we're at 4/5 capacity (rounded up)
+   local threshold = math.ceil(max_population * 4 / 5)
 
    if current_population >= threshold then
       self:_butcher_adult_animal()
