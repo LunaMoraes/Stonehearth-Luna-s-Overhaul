@@ -1,0 +1,15 @@
+{
+    "components": {
+        "mixintypes": {
+            "stonehearth_ace:training_dummy": "override"
+        },
+        "stonehearth_ace:training_dummy": {
+            "combat_time": 5,
+            "allowed_jobs": {
+                "stonehearth:jobs:cleric:combat": 2,
+                "stonehearth:jobs:footman": 2,
+                "stonehearth:jobs:knight": 2
+            }
+        }
+    }
+}

@@ -10,5 +10,50 @@
          "default_role": "override"
       },
       "default_role": "support_cleric"
+   },
+   "level_data": {
+      "1": {
+         "mixintypes": {
+				"perks": "override"
+		   },
+         "perks": [
+            {
+               "name": "i18n(stonehearth_ace:jobs.cleric.cleric_description.level_1_data.training_perk_name)",
+               "description": "i18n(stonehearth_ace:jobs.cleric.cleric_description.level_1_data.training_perk_description)",
+               "id": "training_perk",
+               "icon": "/stonehearth_ace/jobs/cleric/images/training.png",
+               "level": 1
+            },
+            {
+               "type": "apply_buff",
+               "name": "i18n(stonehearth:jobs.cleric.cleric_description.level_1_data.perk_000_name)",
+               "id": "cleric_heal_aura_1",
+               "icon": "/stonehearth/jobs/cleric/images/cleric_perk_healing_aura.png",
+               "buff_name": "stonehearth:buffs:cleric:heal_aura_1",
+               "description": "i18n(stonehearth_ace:jobs.cleric.cleric_description.level_1_data.perk_000_description)",
+               "level": 1,
+               "demote_fn": "remove_buff"
+            },
+            {
+               "type": "apply_buff",
+               "id": "cleric_training_1",
+               "buff_name": "stonehearth_ace:buffs:0_cleric:training_1",
+               "demote_fn": "remove_buff"
+            },
+            {
+               "type": "add_equipment_role_buffs",
+               "id": "cleric_role_training",
+					"equipment_role_buffs": {
+                  "healing_cleric": [
+                     "stonehearth_ace:buffs:training_allowed"
+                  ],
+                  "support_cleric": [
+                     "stonehearth_ace:buffs:training_allowed"
+                  ]
+               },	
+               "demote_fn": "remove_equipment_role_buffs"
+            }
+         ]
+      }
    }
 }

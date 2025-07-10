@@ -48,6 +48,26 @@ local function monkey_patching()
       radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch ShepherdPastureComponent')
    end
 
+   -- Patch for training dummy trivial action (this is the one actually used - priority 1)
+   local training_dummy_monkey_see = require('monkey_patches.luna_training_dummy')
+   local training_dummy_monkey_do = radiant.mods.require('stonehearth_ace.ai.actions.training.train_find_best_training_dummy_trivial_action')
+   if training_dummy_monkey_see and training_dummy_monkey_do then
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching FindBestTrainingDummyTrivial for role-based training')
+      radiant.mixin(training_dummy_monkey_do, training_dummy_monkey_see)
+   else
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch FindBestTrainingDummyTrivial')
+   end
+
+   -- Patch for training attack adjacent action to use role-based training logic
+   local train_attack_monkey_see = require('monkey_patches.luna_train_attack_adjacent')
+   local train_attack_monkey_do = radiant.mods.require('stonehearth_ace.ai.actions.training.train_attack_adjacent_action')
+   if train_attack_monkey_see and train_attack_monkey_do then
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server monkey-patching TrainAttackAdjacent for role-based training')
+      radiant.mixin(train_attack_monkey_do, train_attack_monkey_see)
+   else
+      radiant.log.write_('luna_overhaul', 0, 'Luna Overhaul server ***FAILED*** to monkey-patch TrainAttackAdjacent')
+   end
+   
    patches_applied = true
 end
 

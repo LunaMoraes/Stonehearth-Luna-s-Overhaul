@@ -46,6 +46,7 @@
 	},
 	"mixintos" : {
 		"/stonehearth_ace/locales/en.json" : "file(locales/en.json)",
+		"stonehearth:sheep": "file(mixins/entities/critters/sheep/sheep.json)",
 		"stonehearth:jobs:shepherd": "file(mixins/jobs/shepherd/shepherd_description.json)",
 		"stonehearth:pet_collar": "file(mixins/pet_collar_training_mixin.json)",
 		"stonehearth:hotkeys" : "luna_overhaul:hotkeys",
@@ -55,6 +56,10 @@
 		"stonehearth/data/ui/start_menu.json" : "file(data/ui/start_menu.json)",
 		"stonehearth/jobs/potter/recipes/decorative_vase_recipe.json": "file(mixins/jobs/potter/recipes/decorative_vase_recipe.json)",
 		"stonehearth/jobs/mason/recipes/stone_floor_candle_holder_recipe.json": "file(mixins/jobs/mason/recipes/stone_floor_candle_holder_recipe.json)",
+		"stonehearth_ace:gizmos:training_dummy": "file(mixins/entities/gizmos/training_dummy/training_dummy.json)",
+		"stonehearth_ace:gizmos:clay_training_dummy": "file(mixins/entities/gizmos/clay_training_dummy/clay_training_dummy.json)",
+		"stonehearth_ace:gizmos:brass_training_dummy": "file(mixins/entities/gizmos/brass_training_dummy/brass_training_dummy.json)",
+		"stonehearth_ace:gizmos:stone_training_dummy": "file(mixins/entities/gizmos/stone_training_dummy/stone_training_dummy.json)",
 		"stonehearth_ace/jobs/potter/recipes/decorative_coffee_pot_recipe.json": "file(mixins/jobs/potter/recipes/decorative_coffee_pot_recipe.json)",
 		"stonehearth_ace/jobs/potter/recipes/decorative_teapot_recipe.json": "file(mixins/jobs/potter/recipes/decorative_teapot_recipe.json)",
 		"stonehearth_ace:terrain:pasture_grass:sprouting": "file(mixins/entities/terrain/sprouting_pasture_grass.json)",
@@ -96,6 +101,7 @@
 		]
 	},
 	"overrides" : {
+		"stonehearth_ace/ai/actions/training/train_find_best_training_dummy_action.lua": "file(ai/actions/training/luna_find_best_training_dummy_action_override.lua)",
 		"stonehearth/ui/game/citizens/citizens.html" : "file(ui/game/citizens/citizens.html)",
 		"stonehearth/ui/game/citizens/citizens.js" : "file(ui/game/citizens/citizens.js)",
 		"stonehearth/ui/game/start_menu/start_menu.js" : "file(ui/game/start_menu/start_menu.js)",
