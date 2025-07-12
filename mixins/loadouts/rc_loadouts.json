@@ -1,11 +1,27 @@
 {
    "loadouts": {
+      "food_for_days":{
+         "content": {
+            "mixintypes": {
+               "jerky": "remove"
+            },
+            "cook": {
+               "ordinal": 1,
+               "display_name": "i18n(stonehearth:jobs.cook.cook_description.display_name)",
+               "type": "entity",
+               "uri": "stonehearth_ace:cook:talisman:clay",
+               "icon": "/stonehearth_ace/data/loadouts/images/items/cook_ladle.png",
+               "amount": 1
+            }
+         }
+      },
       "merchant_caravan": {
          "content": {
             "mixintypes": {
                "footman": "remove",
                "herbalist": "remove",
-               "herbalist_pot": "remove"
+               "herbalist_pot": "remove",
+               "cook": "remove"
             },
             "cleric": {
                "ordinal": 2,
@@ -13,6 +29,47 @@
                "type": "entity",
                "uri": "stonehearth:cleric:talisman",
                "icon": "file(images/items/cleric_tome.png)",
+               "amount": 1
+            },
+            "weaver": {
+               "ordinal": 3,
+               "display_name": "i18n(stonehearth:jobs.weaver.weaver_description.display_name)",
+               "type": "entity",
+               "uri": "stonehearth:weaver:talisman",
+               "icon": "file(images/items/weaver_spindle.png)",
+               "amount": 1
+            }
+         }
+      },
+      "military_expedition":{
+         "content": {
+            "mixintypes": {
+               "footman": "remove"
+            },
+            "cleric": {
+               "ordinal": 1,
+               "display_name": "i18n(stonehearth:jobs.cleric.cleric_description.display_name)",
+               "type": "entity",
+               "uri": "stonehearth:cleric:talisman",
+               "icon": "file(images/items/cleric_tome.png)",
+               "amount": 2
+            },
+            "training_dummy": {
+               "amount": "2"
+            }
+         }
+      },
+      "noble_entourage": {
+         "content": {
+            "mixintypes": {
+               "trapper": "remove"
+            },
+            "weaver": {
+               "ordinal": 1,
+               "display_name": "i18n(stonehearth:jobs.weaver.weaver_description.display_name)",
+               "type": "entity",
+               "uri": "stonehearth:weaver:talisman",
+               "icon": "file(images/items/weaver_spindle.png)",
                "amount": 1
             }
          }
