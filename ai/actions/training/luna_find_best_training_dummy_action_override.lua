@@ -37,9 +37,6 @@ local function find_training_dummy(entity)
    local searching_job_level = job_level
    local searching_roles = job_comp:get_roles()
    
-      log_prefix, searching_entity_id, searching_job_uri, searching_job_level, 
-      radiant.util.table_tostring(searching_roles))
-
    -- We use a generic key to get all dummies, then filter in Lua.
    return stonehearth.ai:filter_from_key('stonehearth_ace:training_dummy:', '',
       function(target)
@@ -53,7 +50,8 @@ local function find_training_dummy(entity)
          end
          
          -- Use the STORED data from the searching entity, not any current entity state
-            log_prefix, target, searching_entity_id, searching_job_uri, searching_job_level)
+         -- log:info('%s: Checking target %s for entity %s (job: %s, level: %d)', 
+         --    log_prefix, target, searching_entity_id, searching_job_uri, searching_job_level)
 
          -- Check 1: Base job URI (the original ACE logic).
          local base_level = training_dummy:can_train_entity_level(searching_job_uri)
