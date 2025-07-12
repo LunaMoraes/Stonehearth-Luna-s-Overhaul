@@ -104,6 +104,8 @@
 		"stonehearth_ace/ai/actions/training/train_find_best_training_dummy_action.lua": "file(ai/actions/training/luna_find_best_training_dummy_action_override.lua)",
 		"stonehearth/ui/game/citizens/citizens.html" : "file(ui/game/citizens/citizens.html)",
 		"stonehearth/ui/game/citizens/citizens.js" : "file(ui/game/citizens/citizens.js)",
+		"stonehearth/ui/game/town/town.html" : "file(ui/game/town/town.html)",
+		"stonehearth/ui/game/town/town.js" : "file(ui/game/town/town.js)",
 		"stonehearth/ui/game/start_menu/start_menu.js" : "file(ui/game/start_menu/start_menu.js)",
 		"stonehearth/ui/game/modes/zones_mode/pasture/pasture.html": "file(ui/game/modes/zones_mode/pasture/pasture.html)",
 		"stonehearth/ui/game/modes/zones_mode/pasture/pasture.js": "file(ui/game/modes/zones_mode/pasture/pasture.js)",
@@ -133,6 +135,10 @@
 		},
 		"set_pasture_auto_butcher": {
 			"controller": "file(call_handlers/pasture_call_handler.lua)",
+			"endpoint": "server"
+		},
+		"get_elapsed_days": {
+			"controller": "file(call_handlers/town_call_handlers.lua)",
 			"endpoint": "server"
 		}
 	}

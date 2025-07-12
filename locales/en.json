@@ -146,6 +146,9 @@
    },
    "ui": {
       "game": {
+         "town_overview": {
+            "elapsed_days": "Days Elapsed:"
+         },
          "citizens": {
             "no_citizens": "No citizens on town"
          },
